@@ -17,7 +17,7 @@ namespace Counsel_System.Contents
         /// <summary>
         /// 題目key
         /// </summary>
-        private enum enumKey { 本人概況_血型, 本人概況_宗教, 本人概況_身高, 本人概況_體重, 本人概況_生理缺陷, 本人概況_曾患特殊疾病 }
+        private enum enumKey { 本人概況_血型, 本人概況_宗教, 本人概況_身高, 本人概況_體重, 本人概況_生理缺陷, 本人概況_曾患特殊疾病, 本人概況_原住民血統 }
 
         List<string> _StudenIDList;
         int _intStudentID = 0;
@@ -34,8 +34,8 @@ namespace Counsel_System.Contents
         /// <summary>
         /// 本人概況_血型
         /// </summary>
-        UDTSingleRecordDef _udtSrFlp01;        
-        
+        UDTSingleRecordDef _udtSrFlp01;
+
         /// <summary>
         /// 本人概況_宗教
         /// </summary>
@@ -45,7 +45,7 @@ namespace Counsel_System.Contents
         /// 本人概況_身高
         /// </summary>
         UDTSemesterDataDef _udtSdDg01;
-        
+
         /// <summary>
         /// 本人概況_體重
         /// </summary>
@@ -54,14 +54,19 @@ namespace Counsel_System.Contents
         /// <summary>
         /// 本人概況_生理缺陷
         /// </summary>
-        Dictionary<string,UDTMultipleRecordDef> _udtMrFlp01Dict;
-        
+        Dictionary<string, UDTMultipleRecordDef> _udtMrFlp01Dict;
+
         /// <summary>
         /// 本人概況_曾患特殊疾病
         /// </summary>
-        Dictionary<string,UDTMultipleRecordDef> _udtMrFlp02Dict;
+        Dictionary<string, UDTMultipleRecordDef> _udtMrFlp02Dict;
 
-        Dictionary<string,QuestionData> _QuestionDict;
+        /// <summary>
+        /// 本人概況_原住民血統
+        /// </summary>
+        UDTSingleRecordDef _udtSrFlp05;
+
+        Dictionary<string, QuestionData> _QuestionDict;
 
         /// <summary>
         /// 身高
@@ -80,18 +85,18 @@ namespace Counsel_System.Contents
         public StudABCard01Content()
         {
             InitializeComponent();
-            
+
             _StudenIDList = new List<string>();
             _udtMrFlp01Dict = new Dictionary<string, UDTMultipleRecordDef>();
-            _udtMrFlp02Dict = new Dictionary<string, UDTMultipleRecordDef>();            
+            _udtMrFlp02Dict = new Dictionary<string, UDTMultipleRecordDef>();
 
             _QDMang = new ABCardQuestionDataManager();
             _QuestionDict = _QDMang.GetQuestionDataByGroupName(GroupName);
             this.Group = "綜合表現紀錄表-本人概況";
             _bgWorker = new BackgroundWorker();
-            
+
             List<string> grYear = Utility.GetClassGradeYear();
-            
+
             if (grYear.Count > 3)
                 SetDgColumn4_6Visable(true);
             else
@@ -113,7 +118,7 @@ namespace Counsel_System.Contents
         void _ChangeManager_StatusChanged(object sender, ChangeEventArgs e)
         {
             this.CancelButtonVisible = (e.Status == ValueStatus.Dirty);
-            this.SaveButtonVisible = (e.Status == ValueStatus.Dirty);            
+            this.SaveButtonVisible = (e.Status == ValueStatus.Dirty);
         }
         void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -138,8 +143,8 @@ namespace Counsel_System.Contents
         /// 設定控制項初始值
         /// </summary>
         private void SetControlsDefault()
-        { 
-            foreach(Control c in flp01.Controls)
+        {
+            foreach (Control c in flp01.Controls)
             {
                 if (c is RadioButton)
                 {
@@ -187,20 +192,20 @@ namespace Counsel_System.Contents
 
                 if (c is TextBox)
                     c.Text = "";
-            }        
+            }
         }
 
         private void ReLoadData()
-        {            
+        {
             _ChangeManager.SuspendListen();
-            
-            if(_reloadQuestion)
+
+            if (_reloadQuestion)
                 LoadQuestionToUI();
 
             SetControlsDefault();
             BindAnswerDataToUI();
             _ChangeManager.Reset();
-            _ChangeManager.ResumeListen();            
+            _ChangeManager.ResumeListen();
             this.Loading = false;
             _reloadQuestion = false;
         }
@@ -209,12 +214,12 @@ namespace Counsel_System.Contents
         {
             dg01.EndEdit();
             // 檢查資料
-            bool hasError=false ;
+            bool hasError = false;
             foreach (DataGridViewRow drv in dg01.Rows)
             {
                 foreach (DataGridViewCell drc in drv.Cells)
                     if (drc.ErrorText != "")
-                        hasError = true;            
+                        hasError = true;
             }
 
             if (hasError)
@@ -232,13 +237,36 @@ namespace Counsel_System.Contents
 
         private void SaveAnswerToUDT()
         {
-
             List<UDTSingleRecordDef> iDataList = new List<UDTSingleRecordDef>();
             List<UDTSingleRecordDef> uDataList = new List<UDTSingleRecordDef>();
             List<UDTSemesterDataDef> isDataList = new List<UDTSemesterDataDef>();
             List<UDTSemesterDataDef> usDataList = new List<UDTSemesterDataDef>();
+
+            //原住民血統
+            if (_udtSrFlp05 == null)
+            {
+                _udtSrFlp05 = new UDTSingleRecordDef();
+                _udtSrFlp05.StudentID = _intStudentID;
+            }
+            _udtSrFlp05.Key = enumKey.本人概況_原住民血統.ToString();
+
+            if (radioButton1.Checked)
+            {
+                _udtSrFlp05.Data = radioButton1.Text;
+                _udtSrFlp05.Remark = txtParents.Text + "_" + txtGroupName.Text;
+            }
+            else
+            {
+                _udtSrFlp05.Data = radioButton2.Text;
+                _udtSrFlp05.Remark = "";
+            }
             
-            
+
+            if (string.IsNullOrEmpty(_udtSrFlp05.UID))
+                iDataList.Add(_udtSrFlp05);
+            else
+                uDataList.Add(_udtSrFlp05);
+
             // 血型
             if (_udtSrFlp01 == null)
             {
@@ -256,17 +284,17 @@ namespace Counsel_System.Contents
                     {
                         _udtSrFlp01.Data = rb.Name;
 
-                        foreach(Control cr in flp01.Controls)
+                        foreach (Control cr in flp01.Controls)
                             if (cr is TextBox)
                                 if (cr.Name == rb.Name)
                                     _udtSrFlp01.Remark = cr.Text;
                     }
-                }        
+                }
             }
             if (string.IsNullOrEmpty(_udtSrFlp01.UID))
                 iDataList.Add(_udtSrFlp01);
             else
-               uDataList.Add(_udtSrFlp01);
+                uDataList.Add(_udtSrFlp01);
 
             // 宗教
             if (_udtSrFlp02 == null)
@@ -320,7 +348,7 @@ namespace Counsel_System.Contents
                 if (dg01.Rows[_Dg01RowIdx].Cells[i].Value != null)
                     tmpData1.Add(dg01.Rows[_Dg01RowIdx].Cells[i].Value.ToString());
                 else
-                    tmpData1.Add("");            
+                    tmpData1.Add("");
             }
             _udtSdDg01.S1a = tmpData1[0];
             _udtSdDg01.S1b = tmpData1[1];
@@ -461,8 +489,8 @@ namespace Counsel_System.Contents
         {
             if (_reloadQuestion)
                 _QuestionDict = _QDMang.GetQuestionDataByGroupName(GroupName);
-                        
-            LoadAnswerData();         
+
+            LoadAnswerData();
         }
 
         private void _BGRun()
@@ -492,6 +520,25 @@ namespace Counsel_System.Contents
         /// </summary>
         private void BindAnswerDataToUI()
         {
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            //原住民血統
+            if (_udtSrFlp05 != null)
+            {
+                if (_udtSrFlp05.Data == radioButton1.Text)
+                {
+                    radioButton1.Checked = true;
+                    string[] str = _udtSrFlp05.Remark.Split('_');
+                    txtParents.Text = str[0];
+                    txtGroupName.Text = str[1];
+                }
+                else
+                {
+                    radioButton2.Checked = true;
+                }
+            }
+
+            //血型
             if (_udtSrFlp01 != null)
             {
                 foreach (Control c in flp01.Controls)
@@ -499,7 +546,7 @@ namespace Counsel_System.Contents
                     if (c is RadioButton)
                     {
                         RadioButton rb = c as RadioButton;
-                        if(_udtSrFlp01 !=null)
+                        if (_udtSrFlp01 != null)
                             if (rb.Name == _udtSrFlp01.Data)
                             {
                                 rb.Checked = true;
@@ -523,7 +570,7 @@ namespace Counsel_System.Contents
                     if (c is RadioButton)
                     {
                         RadioButton rb = c as RadioButton;
-                        if(_udtSrFlp02!=null)
+                        if (_udtSrFlp02 != null)
                             if (rb.Name == _udtSrFlp02.Data)
                             {
                                 rb.Checked = true;
@@ -571,48 +618,48 @@ namespace Counsel_System.Contents
                 dg01.Rows[_Dg02RowIdx].Cells[9].Value = _udtSdDg02.S5a;
                 dg01.Rows[_Dg02RowIdx].Cells[10].Value = _udtSdDg02.S5b;
                 dg01.Rows[_Dg02RowIdx].Cells[11].Value = _udtSdDg02.S6a;
-                dg01.Rows[_Dg02RowIdx].Cells[12].Value = _udtSdDg02.S6b;            
+                dg01.Rows[_Dg02RowIdx].Cells[12].Value = _udtSdDg02.S6b;
             }
 
-                foreach (Control c in flp03.Controls)
+            foreach (Control c in flp03.Controls)
+            {
+                if (c is CheckBox)
                 {
-                    if (c is CheckBox)
+                    CheckBox cb = c as CheckBox;
+                    if (_udtMrFlp01Dict.ContainsKey(cb.Name))
                     {
-                        CheckBox cb = c as CheckBox;
-                        if (_udtMrFlp01Dict.ContainsKey(cb.Name))
+                        cb.Checked = true;
+                        if (!string.IsNullOrEmpty(_udtMrFlp01Dict[cb.Name].Remark))
                         {
-                            cb.Checked = true;
-                            if (!string.IsNullOrEmpty(_udtMrFlp01Dict[cb.Name].Remark))
-                            {
-                                foreach (Control cr in flp03.Controls)
-                                    if (cr is TextBox)
-                                        if (cr.Name == _udtMrFlp01Dict[cb.Name].Data)
-                                            cr.Text = _udtMrFlp01Dict[cb.Name].Remark;
-                            }
+                            foreach (Control cr in flp03.Controls)
+                                if (cr is TextBox)
+                                    if (cr.Name == _udtMrFlp01Dict[cb.Name].Data)
+                                        cr.Text = _udtMrFlp01Dict[cb.Name].Remark;
                         }
-                    }
-                }                
-
-                foreach (Control c in flp04.Controls)
-                {
-                    if (c is CheckBox)
-                    {
-                        CheckBox cb = c as CheckBox;
-                        if (_udtMrFlp02Dict.ContainsKey(cb.Name))
-                        {
-                            cb.Checked = true;
-
-                            if (!string.IsNullOrEmpty(_udtMrFlp02Dict[cb.Name].Remark))
-                            {
-                                foreach (Control cr in flp04.Controls)
-                                    if (cr is TextBox)
-                                        if (cr.Name == _udtMrFlp02Dict[cb.Name].Data)
-                                            cr.Text = _udtMrFlp02Dict[cb.Name].Remark;
-                            }
-                        }
-
                     }
                 }
+            }
+
+            foreach (Control c in flp04.Controls)
+            {
+                if (c is CheckBox)
+                {
+                    CheckBox cb = c as CheckBox;
+                    if (_udtMrFlp02Dict.ContainsKey(cb.Name))
+                    {
+                        cb.Checked = true;
+
+                        if (!string.IsNullOrEmpty(_udtMrFlp02Dict[cb.Name].Remark))
+                        {
+                            foreach (Control cr in flp04.Controls)
+                                if (cr is TextBox)
+                                    if (cr.Name == _udtMrFlp02Dict[cb.Name].Data)
+                                        cr.Text = _udtMrFlp02Dict[cb.Name].Remark;
+                        }
+                    }
+
+                }
+            }
 
         }
 
@@ -626,15 +673,19 @@ namespace Counsel_System.Contents
             _udtMrFlp02Dict.Clear();
             _udtSdDg01 = _udtSdDg02 = null;
             _udtSrFlp01 = _udtSrFlp02 = null;
-            
+            _udtSrFlp05 = null;
+
             List<UDTSingleRecordDef> SingleRecordList = UDTTransfer.ABUDTSingleRecordSelectByStudentIDList(_StudenIDList);
-            foreach(UDTSingleRecordDef data in  SingleRecordList)
+            foreach (UDTSingleRecordDef data in SingleRecordList)
             {
-                if(data.Key == enumKey.本人概況_血型.ToString())
-                    _udtSrFlp01=data;
+                if (data.Key == enumKey.本人概況_血型.ToString())
+                    _udtSrFlp01 = data;
 
                 if (data.Key == enumKey.本人概況_宗教.ToString())
                     _udtSrFlp02 = data;
+
+                if (data.Key == enumKey.本人概況_原住民血統.ToString())
+                    _udtSrFlp05 = data;
             }
             List<UDTSemesterDataDef> SemesterDataList = UDTTransfer.ABUDTSemesterDataSelectByStudentIDList(_StudenIDList);
 
@@ -672,7 +723,7 @@ namespace Counsel_System.Contents
             List<CheckBox> cm04 = new List<CheckBox>();
 
             y = flp01.Location.Y;
-            labelX1.Location = new Point(labelX1.Location.X, y+4);
+            labelX1.Location = new Point(labelX1.Location.X, y + 4);
             flp01.Controls.Clear();
             flp02.Controls.Clear();
             flp03.Controls.Clear();
@@ -682,7 +733,7 @@ namespace Counsel_System.Contents
             {
                 flp01.AutoScroll = true;
                 flp01.FlowDirection = FlowDirection.LeftToRight;
-                                
+
                 foreach (QuestionItem qi in _QuestionDict[_Q_Flp01].itemList)
                 {
                     RadioButton rb = new RadioButton();
@@ -701,14 +752,14 @@ namespace Counsel_System.Contents
                         TextBox tb = new TextBox();
                         tb.Name = qi.Key;
                         tb.Width = 70;
-                        tb.Text = "";                      
+                        tb.Text = "";
                         flp01.Controls.Add(tb);
-                        
+
                     }
-                }            
+                }
             }
 
-            y =y+ flp01.Size.Height + 12;
+            y = y + flp01.Size.Height + 12;
             flp02.Location = new Point(flp02.Location.X, y);
             labelX2.Location = new Point(labelX2.Location.X, y + 4);
 
@@ -716,14 +767,14 @@ namespace Counsel_System.Contents
             {
                 flp02.AutoScroll = true;
                 flp02.FlowDirection = FlowDirection.LeftToRight;
-                                
+
                 foreach (QuestionItem qi in _QuestionDict[_Q_Flp02].itemList)
                 {
                     RadioButton rb = new RadioButton();
                     rb.Name = qi.Key;
-                    if (qi.hasRemark)                    
-                        rb.Text = qi.Key + "：";                        
-                    
+                    if (qi.hasRemark)
+                        rb.Text = qi.Key + "：";
+
                     else
                         rb.Text = qi.Key;
                     rb.AutoSize = true;
@@ -751,14 +802,14 @@ namespace Counsel_System.Contents
             {
                 flp03.AutoScroll = true;
                 flp03.FlowDirection = FlowDirection.LeftToRight;
-                                
+
                 foreach (QuestionItem qi in _QuestionDict[_Q_Flp03].itemList)
                 {
                     CheckBox cb = new CheckBox();
                     cb.Name = qi.Key;
-                    if (qi.hasRemark)                  
-                        cb.Text = qi.Key + "：";                  
-                    
+                    if (qi.hasRemark)
+                        cb.Text = qi.Key + "：";
+
                     else
                         cb.Text = qi.Key;
                     cb.AutoSize = true;
@@ -784,14 +835,14 @@ namespace Counsel_System.Contents
             {
                 flp04.AutoScroll = true;
                 flp04.FlowDirection = FlowDirection.LeftToRight;
-                                
+
                 foreach (QuestionItem qi in _QuestionDict[_Q_Flp04].itemList)
                 {
                     CheckBox cb = new CheckBox();
                     cb.Name = qi.Key;
                     if (qi.hasRemark)
                         cb.Text = qi.Key + "：";
-                    
+
                     else
                         cb.Text = qi.Key;
 
@@ -805,17 +856,21 @@ namespace Counsel_System.Contents
                         tb.Name = qi.Key;
                         tb.Width = 70;
                         tb.Text = "";
-                        flp04.Controls.Add(tb);             
+                        flp04.Controls.Add(tb);
                     }
 
                 }
             }
-            
+
+            //原住民
+            y = y + flp04.Size.Height + 12;
+            flp05.Location = new Point(flp05.Location.X, y);
+
             // 調整 datagridview
-            y = y + flp04.Size.Height + 12;            
+            y = y + flp05.Size.Height + 12;
             labelX5.Location = new Point(labelX5.Location.X, y);
 
-            y = y +25;
+            y = y + 25;
 
             dg01.Location = new Point(dg01.Location.X, y);
 
@@ -829,7 +884,12 @@ namespace Counsel_System.Contents
             _ChangeManager.Add(new CheckBoxSource(cm03.ToArray()));
             _ChangeManager.Add(new CheckBoxSource(cm04.ToArray()));
 
-            foreach (Control c in flp01.Controls)            
+            _ChangeManager.Add(new RadioButtonSource(radioButton1));
+            _ChangeManager.Add(new RadioButtonSource(radioButton2));
+            _ChangeManager.Add(new TextBoxSource(txtParents));
+            _ChangeManager.Add(new TextBoxSource(txtGroupName));
+
+            foreach (Control c in flp01.Controls)
                 if (c is TextBox)
                 {
                     TextBox tb = c as TextBox;
@@ -855,7 +915,7 @@ namespace Counsel_System.Contents
                 {
                     TextBox tb = c as TextBox;
                     _ChangeManager.Add(new TextBoxSource(tb));
-                }            
+                }
 
 
         }
@@ -866,12 +926,12 @@ namespace Counsel_System.Contents
         /// <param name="bol"></param>
         private void SetDgColumn4_6Visable(bool bol)
         {
-            colS4a.Visible = colS4b.Visible=colS5a.Visible=colS5b.Visible=colS6a.Visible=colS6b.Visible=bol ;
+            colS4a.Visible = colS4b.Visible = colS5a.Visible = colS5b.Visible = colS6a.Visible = colS6b.Visible = bol;
         }
 
         private void dg01_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            dg01.EndEdit();            
+            dg01.EndEdit();
 
             this.SaveButtonVisible = true;
             this.CancelButtonVisible = true;
@@ -885,13 +945,29 @@ namespace Counsel_System.Contents
                         dg01.CurrentCell.ErrorText = "必須為數字";
                     else
                         dg01.CurrentCell.ErrorText = "";
-                
+
                 }
-            
+
             }
             dg01.BeginEdit(false);
 
         }
-        
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                txtParents.Enabled = true;
+                txtGroupName.Enabled = true;
+            }
+            else
+            {
+                txtParents.Enabled = false;
+                txtGroupName.Enabled = false;
+                txtParents.Text = "";
+                txtGroupName.Text = "";
+            }
+        }
+
     }
 }

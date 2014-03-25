@@ -998,10 +998,22 @@ namespace Counsel_System.Forms
                         {
                             case "本人概況_血型": row["血型"] = data.Data; break;
                             case "本人概況_宗教": row["宗教"] = data.Data; break;
+
+                            case "本人概況_原住民血統": 
+                                row["原住民血統"] = data.Data;
+                                if (data.Data == "有")
+                                {
+                                    string[] str = data.Remark.Split('_');
+                                    row["原住民血統_稱謂"] = str[0];
+                                    row["原住民血統_族別"] = str[1];
+                                }
+                                break;
+
                             case "家庭狀況_監護人_姓名": row["監護人_姓名"] = data.Data; break;
                             case "家庭狀況_監護人_關係": row["監護人_關係"] = data.Data; break;
                             case "家庭狀況_監護人_通訊地址": row["監護人_通訊地址"] = data.Data; break;
                             case "家庭狀況_監護人_電話": row["監護人_電話"] = data.Data; break;
+
                             case "自傳_家中最了解我的人": row["家中最了解我的人"] = data.Data; break;
                             case "自傳_常指導我做功課的人": row["常指導我做功課的人"] = data.Data; break;
                             case "自傳_讀過且印象最深刻的課外書": row["讀過且印象最深刻的課外書"] = data.Data; break;
@@ -1017,6 +1029,26 @@ namespace Counsel_System.Forms
                             case "自傳_最快樂的回憶": row["最快樂的回憶"] = data.Data; break;
                             case "自傳_最痛苦的回憶": row["最痛苦的回憶"] = data.Data; break;
                             case "自傳_最足以描述自己的幾句話": row["最足以描述自己的幾句話"] = data.Data; break;
+                                //Cloud新增
+                            case "自傳_家中最了解我的人_因為": row["家中最了解我的人_因為"] = data.Data; break;
+                            case "自傳_我在家中最怕的人是": row["我在家中最怕的人是"] = data.Data; break;
+                            case "自傳_我在家中最怕的人是_因為": row["我在家中最怕的人是_因為"] = data.Data; break;
+                            case "自傳_我覺得我的優點是": row["我覺得我的優點是"] = data.Data; break;
+                            case "自傳_我覺得我的缺點是": row["我覺得我的缺點是"] = data.Data; break;
+                            case "自傳_最喜歡的國小（國中）老師": row["最喜歡的國小（國中）老師"] = data.Data; break;
+                            case "自傳_最喜歡的國小（國中）老師__因為": row["最喜歡的國小（國中）老師__因為"] = data.Data; break;
+                            case "自傳_小學（國中）老師或同學常說我是": row["小學（國中）老師或同學常說我是"] = data.Data; break;
+                            case "自傳_小學（國中）時我曾在班上登任過的職務有": row["小學（國中）時我曾在班上登任過的職務有"] = data.Data; break;
+                            case "自傳_我在小學（國中）得過的獎有": row["我在小學（國中）得過的獎有"] = data.Data; break;
+                            case "自傳_我覺得我自己的過去最滿意的是": row["我覺得我自己的過去最滿意的是"] = data.Data; break;
+                            case "自傳_我排遣休閒時間的方法是": row["我排遣休閒時間的方法是"] = data.Data; break;
+                            case "自傳_我最難忘的一件事是": row["我最難忘的一件事是"] = data.Data; break;
+                            case "自傳_自我的心聲_一年級_我目前遇到最大的困難是": row["自我的心聲_一年級_我目前遇到最大的困難是"] = data.Data; break;
+                            case "自傳_自我的心聲_一年級_我目前最需要的協助是": row["自我的心聲_一年級_我目前最需要的協助是"] = data.Data; break;
+                            case "自傳_自我的心聲_二年級_我目前遇到最大的困難是": row["自我的心聲_二年級_我目前遇到最大的困難是"] = data.Data; break;
+                            case "自傳_自我的心聲_二年級_我目前最需要的協助是": row["自我的心聲_二年級_我目前最需要的協助是"] = data.Data; break;
+                            case "自傳_自我的心聲_三年級_我目前遇到最大的困難是": row["自我的心聲_三年級_我目前遇到最大的困難是"] = data.Data; break;
+                            case "自傳_自我的心聲_三年級_我目前最需要的協助是": row["自我的心聲_三年級_我目前最需要的協助是"] = data.Data; break;
 
                             case "自我認識_需要改進的地方_1": row["自我認識_需要改進的地方_1"] = data.Data; break;
                             case "自我認識_優點_1": row["自我認識_優點_1"] = data.Data; break;
@@ -1133,6 +1165,7 @@ namespace Counsel_System.Forms
                         ChechMapFieldName("家長親屬_職業", i);
                         ChechMapFieldName("家長親屬_工作機構", i);
                         ChechMapFieldName("家長親屬_職稱", i);
+                        ChechMapFieldName("家長親屬_原國籍", i);
 
                         row["家長親屬_稱謂" + i] = data.Title;
                         row["家長親屬_姓名" + i] = data.Name;
@@ -1144,6 +1177,7 @@ namespace Counsel_System.Forms
                         row["家長親屬_職業" + i] = data.Job;
                         row["家長親屬_工作機構" + i] = data.Institute;
                         row["家長親屬_職稱" + i] = data.JobTitle;
+                        row["家長親屬_原國籍" + i] = data.National;
                         i++;
                     }                
                 }
@@ -1504,6 +1538,30 @@ namespace Counsel_System.Forms
             _dtTable.Columns.Add("備註_備註");
 
             _dtTable.Columns.Add("獎懲明細");
+
+            //Cloud新增
+            _dtTable.Columns.Add("原住民血統");
+            _dtTable.Columns.Add("原住民血統_稱謂");
+            _dtTable.Columns.Add("原住民血統_族別");
+            _dtTable.Columns.Add("家中最了解我的人_因為");
+            _dtTable.Columns.Add("我在家中最怕的人是");
+            _dtTable.Columns.Add("我在家中最怕的人是_因為");
+            _dtTable.Columns.Add("我覺得我的優點是");
+            _dtTable.Columns.Add("我覺得我的缺點是");
+            _dtTable.Columns.Add("最喜歡的國小（國中）老師");
+            _dtTable.Columns.Add("最喜歡的國小（國中）老師__因為");
+            _dtTable.Columns.Add("小學（國中）老師或同學常說我是");
+            _dtTable.Columns.Add("小學（國中）時我曾在班上登任過的職務有");
+            _dtTable.Columns.Add("我在小學（國中）得過的獎有");
+            _dtTable.Columns.Add("我覺得我自己的過去最滿意的是");
+            _dtTable.Columns.Add("我排遣休閒時間的方法是");
+            _dtTable.Columns.Add("我最難忘的一件事是");
+            _dtTable.Columns.Add("自我的心聲_一年級_我目前遇到最大的困難是");
+            _dtTable.Columns.Add("自我的心聲_一年級_我目前最需要的協助是");
+            _dtTable.Columns.Add("自我的心聲_二年級_我目前遇到最大的困難是");
+            _dtTable.Columns.Add("自我的心聲_二年級_我目前最需要的協助是");
+            _dtTable.Columns.Add("自我的心聲_三年級_我目前遇到最大的困難是");
+            _dtTable.Columns.Add("自我的心聲_三年級_我目前最需要的協助是");
                
 
             
@@ -1541,6 +1599,7 @@ namespace Counsel_System.Forms
                 _dtTable.Columns.Add("家長親屬_職業" + i);
                 _dtTable.Columns.Add("家長親屬_工作機構" + i);
                 _dtTable.Columns.Add("家長親屬_職稱" + i);
+                _dtTable.Columns.Add("家長親屬_原國籍" + i);
                 _dtTable.Columns.Add("兄弟姊妹_稱謂" + i);
                 _dtTable.Columns.Add("兄弟姊妹_姓名" + i);
                 _dtTable.Columns.Add("兄弟姊妹_出生年" + i);

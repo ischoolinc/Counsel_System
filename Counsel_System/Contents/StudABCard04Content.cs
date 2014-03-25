@@ -29,6 +29,7 @@ namespace Counsel_System.Contents
         public StudABCard04Content()
         {
             InitializeComponent();
+            
             _StudentIDList = new List<string>();
             _dataDict = new Dictionary<string, UDTSingleRecordDef>();
             _txtControlTag = new Dictionary<string, string>();
@@ -52,7 +53,8 @@ namespace Counsel_System.Contents
                     TextBoxX tb = cr as TextBoxX;
                     _ChangeListener.Add(new TextBoxSource(tb));
                 }
-            }        
+            }
+
         }
 
         void _ChangeListener_StatusChanged(object sender, ChangeEventArgs e)
@@ -107,21 +109,21 @@ namespace Counsel_System.Contents
         /// </summary>
         private void setTabIndex()
         {
-            txt01.TabIndex = 1;
-            txt02.TabIndex = 2;            
-            txt03.TabIndex = 3;
-            txt04_1.TabIndex = 4;
-            txt04_2.TabIndex = 5;
-            txt05_1.TabIndex = 6;
-            txt05_2.TabIndex = 7;
-            txt06_1.TabIndex = 8;
-            txt06_2.TabIndex = 9;
-            txt07_1.TabIndex = 10;
-            txt07_2.TabIndex = 11;
-            txt08.TabIndex = 12;
-            txt09.TabIndex = 13;
-            txt10.TabIndex = 14;
-            txt11.TabIndex = 15;        
+            //txt01.TabIndex = 1;
+            //txt02.TabIndex = 2;            
+            //txt03.TabIndex = 3;
+            //txt04_1.TabIndex = 4;
+            //txt04_2.TabIndex = 5;
+            //txt05_1.TabIndex = 6;
+            //txt05_2.TabIndex = 7;
+            //txt06_1.TabIndex = 8;
+            //txt06_2.TabIndex = 9;
+            //txt07_1.TabIndex = 10;
+            //txt07_2.TabIndex = 11;
+            //txt08.TabIndex = 12;
+            //txt09.TabIndex = 13;
+            //txt10.TabIndex = 14;
+            //txt11.TabIndex = 15; 
         }
 
         /// <summary>
@@ -144,6 +146,27 @@ namespace Counsel_System.Contents
             _txtControlTag.Add("txt09", "自傳_最快樂的回憶");
             _txtControlTag.Add("txt10", "自傳_最痛苦的回憶");
             _txtControlTag.Add("txt11", "自傳_最足以描述自己的幾句話");
+
+            //Cloud新增
+            _txtControlTag.Add("txt01a", "自傳_家中最了解我的人_因為");
+            _txtControlTag.Add("txt12", "自傳_我在家中最怕的人是");
+            _txtControlTag.Add("txt12a", "自傳_我在家中最怕的人是_因為");
+            _txtControlTag.Add("txt13a", "自傳_我覺得我的優點是");
+            _txtControlTag.Add("txt13b", "自傳_我覺得我的缺點是");
+            _txtControlTag.Add("txt14", "自傳_最喜歡的國小（國中）老師");
+            _txtControlTag.Add("txt14a", "自傳_最喜歡的國小（國中）老師__因為");
+            _txtControlTag.Add("txt15", "自傳_小學（國中）老師或同學常說我是");
+            _txtControlTag.Add("txt16", "自傳_小學（國中）時我曾在班上登任過的職務有");
+            _txtControlTag.Add("txt17", "自傳_我在小學（國中）得過的獎有");
+            _txtControlTag.Add("txt18", "自傳_我覺得我自己的過去最滿意的是");
+            _txtControlTag.Add("txt19", "自傳_我排遣休閒時間的方法是");
+            _txtControlTag.Add("txt20", "自傳_我最難忘的一件事是");
+            _txtControlTag.Add("txtG1a", "自傳_自我的心聲_一年級_我目前遇到最大的困難是");
+            _txtControlTag.Add("txtG1b", "自傳_自我的心聲_一年級_我目前最需要的協助是");
+            _txtControlTag.Add("txtG2a", "自傳_自我的心聲_二年級_我目前遇到最大的困難是");
+            _txtControlTag.Add("txtG2b", "自傳_自我的心聲_二年級_我目前最需要的協助是");
+            _txtControlTag.Add("txtG3a", "自傳_自我的心聲_三年級_我目前遇到最大的困難是");
+            _txtControlTag.Add("txtG3b", "自傳_自我的心聲_三年級_我目前最需要的協助是");
 
             foreach (Control cr in this.Controls)
             {
@@ -235,7 +258,11 @@ namespace Counsel_System.Contents
         {
             foreach (Control cr in this.Controls)
                 if (cr is TextBox)
+                {
                     cr.Text = "";
+                    cr.Tag = null;
+                }
+                    
         }
 
         

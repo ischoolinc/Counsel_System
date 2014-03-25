@@ -29,20 +29,11 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudABCard02Content));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudABCard02Content));
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.dgRelative = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.dgRelativeColIdx0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgRelativeCol01 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgRelativeCol02 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgRelativeCol03 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgRelativeCol04 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgRelativeCol05 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgRelativeCol06 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgRelativeCol07 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgRelativeCol08 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.dgSibling = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.dg2ColIdx = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,6 +42,16 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgYearly = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.dg3ColIdx = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgYearlyCol01 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgYearlyCol02 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgYearlyCol03 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgYearlyCol04 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgYearlyCol05 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgYearlyCol06 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgYearlyCol07 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgYearlyCol08 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgYearlyCol09 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.txtMailingAddress = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -66,16 +67,16 @@
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.labelX10 = new DevComponents.DotNetBar.LabelX();
             this.txtSiblingNo = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.dg3ColIdx = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgYearlyCol01 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgYearlyCol02 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgYearlyCol03 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgYearlyCol04 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgYearlyCol05 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgYearlyCol06 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgYearlyCol07 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
-            this.dgYearlyCol08 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgYearlyCol09 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
+            this.dgRelativeColIdx0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgRelativeCol01 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgRelativeCol02 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgRelativeCol03 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgRelativeCol04 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgRelativeCol05 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgRelativeCol06 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgRelativeCol07 = new Counsel_System.DAO.DataGridViewComboBoxExColumn();
+            this.dgRelativeCol08 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgNational = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgRelative)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSibling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgYearly)).BeginInit();
@@ -114,10 +115,11 @@
             this.dgRelativeCol05,
             this.dgRelativeCol06,
             this.dgRelativeCol07,
-            this.dgRelativeCol08});
+            this.dgRelativeCol08,
+            this.dgNational});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
@@ -131,67 +133,6 @@
             this.dgRelative.RowTemplate.Height = 24;
             this.dgRelative.Size = new System.Drawing.Size(492, 130);
             this.dgRelative.TabIndex = 1;
-            // 
-            // dgRelativeColIdx0
-            // 
-            this.dgRelativeColIdx0.Frozen = true;
-            this.dgRelativeColIdx0.HeaderText = "稱謂";
-            this.dgRelativeColIdx0.Name = "dgRelativeColIdx0";
-            this.dgRelativeColIdx0.ReadOnly = true;
-            this.dgRelativeColIdx0.Width = 60;
-            // 
-            // dgRelativeCol01
-            // 
-            this.dgRelativeCol01.Frozen = true;
-            this.dgRelativeCol01.HeaderText = "姓名";
-            this.dgRelativeCol01.Name = "dgRelativeCol01";
-            this.dgRelativeCol01.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgRelativeCol01.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dgRelativeCol02
-            // 
-            this.dgRelativeCol02.HeaderText = "存/歿";
-            this.dgRelativeCol02.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgRelativeCol02.Items")));
-            this.dgRelativeCol02.Name = "dgRelativeCol02";
-            this.dgRelativeCol02.Width = 50;
-            // 
-            // dgRelativeCol03
-            // 
-            this.dgRelativeCol03.HeaderText = "出生年";
-            this.dgRelativeCol03.Name = "dgRelativeCol03";
-            this.dgRelativeCol03.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgRelativeCol03.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dgRelativeCol03.Width = 60;
-            // 
-            // dgRelativeCol04
-            // 
-            this.dgRelativeCol04.HeaderText = "職業";
-            this.dgRelativeCol04.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgRelativeCol04.Items")));
-            this.dgRelativeCol04.Name = "dgRelativeCol04";
-            // 
-            // dgRelativeCol05
-            // 
-            this.dgRelativeCol05.HeaderText = "工作機構";
-            this.dgRelativeCol05.Name = "dgRelativeCol05";
-            this.dgRelativeCol05.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgRelativeCol05.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dgRelativeCol06
-            // 
-            this.dgRelativeCol06.HeaderText = "職稱";
-            this.dgRelativeCol06.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgRelativeCol06.Items")));
-            this.dgRelativeCol06.Name = "dgRelativeCol06";
-            // 
-            // dgRelativeCol07
-            // 
-            this.dgRelativeCol07.HeaderText = "教育程度";
-            this.dgRelativeCol07.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgRelativeCol07.Items")));
-            this.dgRelativeCol07.Name = "dgRelativeCol07";
-            // 
-            // dgRelativeCol08
-            // 
-            this.dgRelativeCol08.HeaderText = "電話";
-            this.dgRelativeCol08.Name = "dgRelativeCol08";
             // 
             // labelX2
             // 
@@ -224,7 +165,7 @@
             this.dataGridViewTextBoxColumn5});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
@@ -297,7 +238,7 @@
             this.dgYearlyCol09});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
@@ -311,6 +252,74 @@
             this.dgYearly.RowTemplate.Height = 24;
             this.dgYearly.Size = new System.Drawing.Size(492, 130);
             this.dgYearly.TabIndex = 6;
+            // 
+            // dg3ColIdx
+            // 
+            this.dg3ColIdx.Frozen = true;
+            this.dg3ColIdx.HeaderText = "年級";
+            this.dg3ColIdx.Name = "dg3ColIdx";
+            this.dg3ColIdx.ReadOnly = true;
+            this.dg3ColIdx.Width = 60;
+            // 
+            // dgYearlyCol01
+            // 
+            this.dgYearlyCol01.HeaderText = "父母關係";
+            this.dgYearlyCol01.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol01.Items")));
+            this.dgYearlyCol01.Name = "dgYearlyCol01";
+            // 
+            // dgYearlyCol02
+            // 
+            this.dgYearlyCol02.HeaderText = "家庭氣氛";
+            this.dgYearlyCol02.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol02.Items")));
+            this.dgYearlyCol02.Name = "dgYearlyCol02";
+            // 
+            // dgYearlyCol03
+            // 
+            this.dgYearlyCol03.HeaderText = "父親管教方式";
+            this.dgYearlyCol03.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol03.Items")));
+            this.dgYearlyCol03.Name = "dgYearlyCol03";
+            // 
+            // dgYearlyCol04
+            // 
+            this.dgYearlyCol04.HeaderText = "母親管教方式";
+            this.dgYearlyCol04.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol04.Items")));
+            this.dgYearlyCol04.Name = "dgYearlyCol04";
+            // 
+            // dgYearlyCol05
+            // 
+            this.dgYearlyCol05.HeaderText = "居住環境";
+            this.dgYearlyCol05.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol05.Items")));
+            this.dgYearlyCol05.Name = "dgYearlyCol05";
+            // 
+            // dgYearlyCol06
+            // 
+            this.dgYearlyCol06.HeaderText = "本人住宿";
+            this.dgYearlyCol06.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol06.Items")));
+            this.dgYearlyCol06.Name = "dgYearlyCol06";
+            // 
+            // dgYearlyCol07
+            // 
+            this.dgYearlyCol07.HeaderText = "經濟狀況";
+            this.dgYearlyCol07.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol07.Items")));
+            this.dgYearlyCol07.Name = "dgYearlyCol07";
+            // 
+            // dgYearlyCol08
+            // 
+            this.dgYearlyCol08.HeaderText = "每星期零用錢(元)";
+            this.dgYearlyCol08.Name = "dgYearlyCol08";
+            // 
+            // dgYearlyCol09
+            // 
+            this.dgYearlyCol09.DropDownHeight = 106;
+            this.dgYearlyCol09.DropDownWidth = 121;
+            this.dgYearlyCol09.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dgYearlyCol09.HeaderText = "我覺得是否足夠";
+            this.dgYearlyCol09.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.dgYearlyCol09.IntegralHeight = false;
+            this.dgYearlyCol09.ItemHeight = 17;
+            this.dgYearlyCol09.Name = "dgYearlyCol09";
+            this.dgYearlyCol09.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgYearlyCol09.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // labelX3
             // 
@@ -526,72 +535,71 @@
             this.txtSiblingNo.Size = new System.Drawing.Size(58, 25);
             this.txtSiblingNo.TabIndex = 12;
             // 
-            // dg3ColIdx
+            // dgRelativeColIdx0
             // 
-            this.dg3ColIdx.Frozen = true;
-            this.dg3ColIdx.HeaderText = "年級";
-            this.dg3ColIdx.Name = "dg3ColIdx";
-            this.dg3ColIdx.ReadOnly = true;
-            this.dg3ColIdx.Width = 60;
+            this.dgRelativeColIdx0.Frozen = true;
+            this.dgRelativeColIdx0.HeaderText = "稱謂";
+            this.dgRelativeColIdx0.Name = "dgRelativeColIdx0";
+            this.dgRelativeColIdx0.ReadOnly = true;
+            this.dgRelativeColIdx0.Width = 60;
             // 
-            // dgYearlyCol01
+            // dgRelativeCol01
             // 
-            this.dgYearlyCol01.HeaderText = "父母關係";
-            this.dgYearlyCol01.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol01.Items")));
-            this.dgYearlyCol01.Name = "dgYearlyCol01";
+            this.dgRelativeCol01.Frozen = true;
+            this.dgRelativeCol01.HeaderText = "姓名";
+            this.dgRelativeCol01.Name = "dgRelativeCol01";
+            this.dgRelativeCol01.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgRelativeCol01.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // dgYearlyCol02
+            // dgRelativeCol02
             // 
-            this.dgYearlyCol02.HeaderText = "家庭氣氛";
-            this.dgYearlyCol02.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol02.Items")));
-            this.dgYearlyCol02.Name = "dgYearlyCol02";
+            this.dgRelativeCol02.HeaderText = "存/歿";
+            this.dgRelativeCol02.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgRelativeCol02.Items")));
+            this.dgRelativeCol02.Name = "dgRelativeCol02";
+            this.dgRelativeCol02.Width = 50;
             // 
-            // dgYearlyCol03
+            // dgRelativeCol03
             // 
-            this.dgYearlyCol03.HeaderText = "父親管教方式";
-            this.dgYearlyCol03.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol03.Items")));
-            this.dgYearlyCol03.Name = "dgYearlyCol03";
+            this.dgRelativeCol03.HeaderText = "出生年";
+            this.dgRelativeCol03.Name = "dgRelativeCol03";
+            this.dgRelativeCol03.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgRelativeCol03.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dgRelativeCol03.Width = 60;
             // 
-            // dgYearlyCol04
+            // dgRelativeCol04
             // 
-            this.dgYearlyCol04.HeaderText = "母親管教方式";
-            this.dgYearlyCol04.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol04.Items")));
-            this.dgYearlyCol04.Name = "dgYearlyCol04";
+            this.dgRelativeCol04.HeaderText = "職業";
+            this.dgRelativeCol04.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgRelativeCol04.Items")));
+            this.dgRelativeCol04.Name = "dgRelativeCol04";
             // 
-            // dgYearlyCol05
+            // dgRelativeCol05
             // 
-            this.dgYearlyCol05.HeaderText = "居住環境";
-            this.dgYearlyCol05.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol05.Items")));
-            this.dgYearlyCol05.Name = "dgYearlyCol05";
+            this.dgRelativeCol05.HeaderText = "工作機構";
+            this.dgRelativeCol05.Name = "dgRelativeCol05";
+            this.dgRelativeCol05.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgRelativeCol05.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // dgYearlyCol06
+            // dgRelativeCol06
             // 
-            this.dgYearlyCol06.HeaderText = "本人住宿";
-            this.dgYearlyCol06.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol06.Items")));
-            this.dgYearlyCol06.Name = "dgYearlyCol06";
+            this.dgRelativeCol06.HeaderText = "職稱";
+            this.dgRelativeCol06.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgRelativeCol06.Items")));
+            this.dgRelativeCol06.Name = "dgRelativeCol06";
             // 
-            // dgYearlyCol07
+            // dgRelativeCol07
             // 
-            this.dgYearlyCol07.HeaderText = "經濟狀況";
-            this.dgYearlyCol07.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgYearlyCol07.Items")));
-            this.dgYearlyCol07.Name = "dgYearlyCol07";
+            this.dgRelativeCol07.HeaderText = "教育程度";
+            this.dgRelativeCol07.Items = ((System.Collections.Generic.List<string>)(resources.GetObject("dgRelativeCol07.Items")));
+            this.dgRelativeCol07.Name = "dgRelativeCol07";
             // 
-            // dgYearlyCol08
+            // dgRelativeCol08
             // 
-            this.dgYearlyCol08.HeaderText = "每星期零用錢(元)";
-            this.dgYearlyCol08.Name = "dgYearlyCol08";
+            this.dgRelativeCol08.HeaderText = "電話";
+            this.dgRelativeCol08.Name = "dgRelativeCol08";
             // 
-            // dgYearlyCol09
+            // dgNational
             // 
-            this.dgYearlyCol09.DropDownHeight = 106;
-            this.dgYearlyCol09.DropDownWidth = 121;
-            this.dgYearlyCol09.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dgYearlyCol09.HeaderText = "我覺得是否足夠";
-            this.dgYearlyCol09.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgYearlyCol09.ItemHeight = 17;
-            this.dgYearlyCol09.Name = "dgYearlyCol09";
-            this.dgYearlyCol09.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgYearlyCol09.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dgNational.HeaderText = "原國籍";
+            this.dgNational.Name = "dgNational";
             // 
             // StudABCard02Content
             // 
@@ -645,15 +653,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeColIdx0;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeCol01;
-        private DAO.DataGridViewComboBoxExColumn dgRelativeCol02;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeCol03;
-        private DAO.DataGridViewComboBoxExColumn dgRelativeCol04;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeCol05;
-        private DAO.DataGridViewComboBoxExColumn dgRelativeCol06;
-        private DAO.DataGridViewComboBoxExColumn dgRelativeCol07;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeCol08;
         private DevComponents.DotNetBar.LabelX labelX10;
         private DevComponents.DotNetBar.Controls.TextBoxX txtSiblingNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn dg3ColIdx;
@@ -666,5 +665,15 @@
         private DAO.DataGridViewComboBoxExColumn dgYearlyCol07;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgYearlyCol08;
         private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn dgYearlyCol09;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeColIdx0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeCol01;
+        private DAO.DataGridViewComboBoxExColumn dgRelativeCol02;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeCol03;
+        private DAO.DataGridViewComboBoxExColumn dgRelativeCol04;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeCol05;
+        private DAO.DataGridViewComboBoxExColumn dgRelativeCol06;
+        private DAO.DataGridViewComboBoxExColumn dgRelativeCol07;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgRelativeCol08;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgNational;
     }
 }

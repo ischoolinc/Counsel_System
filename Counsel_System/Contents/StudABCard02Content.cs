@@ -470,6 +470,12 @@ namespace Counsel_System.Contents
                 else
                     data.Phone = dr.Cells[8].Value.ToString();
 
+                //原國籍
+                if (dr.Cells[9].Value == null)
+                    data.National = "";
+                else
+                    data.National = dr.Cells[9].Value.ToString();
+
                 if (string.IsNullOrEmpty(data.UID))
                     insertDataList.Add(data);
                 else
@@ -704,6 +710,7 @@ namespace Counsel_System.Contents
                         dgRelative.Rows[rowIdx].Cells[6].Value = data.JobTitle;
                         dgRelative.Rows[rowIdx].Cells[7].Value = data.EduDegree;
                         dgRelative.Rows[rowIdx].Cells[8].Value = data.Phone;
+                        dgRelative.Rows[rowIdx].Cells[9].Value = data.National;
                     }
                 }
             }

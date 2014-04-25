@@ -44,7 +44,7 @@
     </Reference>
     <Reference Include="Aspose.Words, Version=4.4.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>RefDLL\Aspose.Words.dll</HintPath>
+      <HintPath>Library\Aspose.Words.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Campus.DocumentValidator, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
@@ -723,10 +723,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ImportExport\ExportStudentV2.resx">
       <DependentUpon>ExportStudentV2.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\QuestionGroupPanel.resx">
       <DependentUpon>QuestionGroupPanel.cs</DependentUpon>

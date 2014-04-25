@@ -1000,12 +1000,18 @@ namespace Counsel_System.Forms
                             case "本人概況_宗教": row["宗教"] = data.Data; break;
 
                             case "本人概況_原住民血統": 
-                                row["原住民血統"] = data.Data;
                                 if (data.Data == "有")
                                 {
+                                    row["原住民血統"] = "■ 有 □ 無";
                                     string[] str = data.Remark.Split('_');
                                     row["原住民血統_稱謂"] = str[0];
                                     row["原住民血統_族別"] = str[1];
+                                }
+                                else
+                                {
+                                    row["原住民血統"] = "□ 有 ■ 無";
+                                    row["原住民血統_稱謂"] = "    ";
+                                    row["原住民血統_族別"] = "    ";
                                 }
                                 break;
 

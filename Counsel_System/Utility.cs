@@ -2436,44 +2436,88 @@ namespace Counsel_System
                     if (string.IsNullOrWhiteSpace(data.Items))
                         data.Items = elmRoot.ToString();                
                 }
+
+                //原住民血統更新
+                if (data.Group == "本人概況" && data.Name == "原住民血統")
+                {
+                    bool change = false;
+
+                    if (data.ControlType != "RADIO_BUTTON")
+                    {
+                        change = true;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(data.Items))
+                    {
+                        change = true;
+                    }
+
+                    if (change)
+                    {
+                        data.QuestionType = "SINGLE_ANSWER";
+                        data.ControlType = "RADIO_BUTTON";
+                        data.CanStudentEdit = true;
+                        data.CanTeacherEdit = true;
+                        data.CanPrint = true;
+                        data.Items = "<Items><item key='有' has_remark='True' /><item key='無' has_remark='False' /></Items>";
+                    }
+                }
             }
          
             // 更新
             UDTTransfer.ABUDTQuestionsDataUpdate(dataList);
             // 新增
-            if (dataList.Count <91)
-                UDTTransfer.ABUDTQuestionsDataInsert(newDataList);
+            //if (dataList.Count <1000)
+            //    UDTTransfer.ABUDTQuestionsDataInsert(newDataList);
 
-
-            List<UDTQuestionsDataDef> sssDataList = new List<UDTQuestionsDataDef>();
-
-            // 單一缺少加入
-            UDTQuestionsDataDef qdadd1 = new UDTQuestionsDataDef();
-            qdadd1.Group = "自傳";
-            qdadd1.Name = "最不喜歡做的事_因為";
-            qdadd1.QuestionType = "SINGLE_ANSWER";
-            qdadd1.ControlType = "TEXTBOX";
-            qdadd1.CanPrint = true;
-            qdadd1.CanStudentEdit = true;
-            qdadd1.CanTeacherEdit = true;
-
-            // 檢查已有不加入
-            bool qdadd1Add = true;
+            List<string> checkList = new List<string>();
             foreach (UDTQuestionsDataDef data in dataList)
             {
-                if (data.Group == qdadd1.Group && data.Name == qdadd1.Name)
-                {
-                    qdadd1Add = false;
-                    break;
-                }
+                string key = data.Group + "_" + data.Name;
+                if (!checkList.Contains(key))
+                    checkList.Add(key);
             }
 
-            if (qdadd1Add)
+            List<UDTQuestionsDataDef> addList = new List<UDTQuestionsDataDef>();
+            foreach (UDTQuestionsDataDef data in newDataList)
             {
-                List<UDTQuestionsDataDef> addList = new List<UDTQuestionsDataDef>();
-                addList.Add(qdadd1);
-                UDTTransfer.ABUDTQuestionsDataInsert(addList);
+                string key = data.Group + "_" + data.Name;
+                if (!checkList.Contains(key))
+                    addList.Add(data);
             }
+
+            if(addList.Count > 0)
+                UDTTransfer.ABUDTQuestionsDataInsert(addList);
+
+            //List<UDTQuestionsDataDef> sssDataList = new List<UDTQuestionsDataDef>();
+
+            // 單一缺少加入
+            //UDTQuestionsDataDef qdadd1 = new UDTQuestionsDataDef();
+            //qdadd1.Group = "自傳";
+            //qdadd1.Name = "最不喜歡做的事_因為";
+            //qdadd1.QuestionType = "SINGLE_ANSWER";
+            //qdadd1.ControlType = "TEXTBOX";
+            //qdadd1.CanPrint = true;
+            //qdadd1.CanStudentEdit = true;
+            //qdadd1.CanTeacherEdit = true;
+
+            // 檢查已有不加入
+            //bool qdadd1Add = true;
+            //foreach (UDTQuestionsDataDef data in dataList)
+            //{
+            //    if (data.Group == qdadd1.Group && data.Name == qdadd1.Name)
+            //    {
+            //        qdadd1Add = false;
+            //        break;
+            //    }
+            //}
+
+            //if (qdadd1Add)
+            //{
+            //    List<UDTQuestionsDataDef> addList = new List<UDTQuestionsDataDef>();
+            //    addList.Add(qdadd1);
+            //    UDTTransfer.ABUDTQuestionsDataInsert(addList);
+            //}
 
         }
 
@@ -2487,7 +2531,29 @@ namespace Counsel_System
             List<string> s1 = new List<string>();
             List<string> s2 = new List<string>();
             List<string> s3 = new List<string>();
+            //Cloud add
+            s1.Add("家中最了解我的人_因為");
+            s1.Add("我在家中最怕的人是");
+            s1.Add("我在家中最怕的人是_因為");
+            s1.Add("我覺得我的優點是");
+            s1.Add("我覺得我的缺點是");
+            s1.Add("最喜歡的國小（國中）老師");
+            s1.Add("最喜歡的國小（國中）老師__因為");
+            s1.Add("小學（國中）老師或同學常說我是");
+            s1.Add("小學（國中）時我曾在班上登任過的職務有");
+            s1.Add("我在小學（國中）得過的獎有");
+            s1.Add("我覺得我自己的過去最滿意的是");
+            s1.Add("我排遣休閒時間的方法是");
+            s1.Add("我最難忘的一件事是");
+            s1.Add("自我的心聲_一年級_我目前遇到最大的困難是");
+            s1.Add("自我的心聲_一年級_我目前最需要的協助是");
+            s1.Add("自我的心聲_二年級_我目前遇到最大的困難是");
+            s1.Add("自我的心聲_二年級_我目前最需要的協助是");
+            s1.Add("自我的心聲_三年級_我目前遇到最大的困難是");
+            s1.Add("自我的心聲_三年級_我目前最需要的協助是");
+            //Old
             s1.Add("最喜歡做的事_因為");
+            s1.Add("最不喜歡做的事_因為");
             s1.Add("他是怎樣的人");
             s1.Add("喜歡的人_因為");
             s1.Add("讀過且印象最深刻的課外書");
@@ -2564,6 +2630,27 @@ namespace Counsel_System
             d2.CanTeacherEdit = true;
             d2.CanPrint = true;
             retVal.Add(d2);
+
+            UDTQuestionsDataDef d3 = new UDTQuestionsDataDef();
+            d3.Group = "本人概況";
+            d3.QuestionType = "SINGLE_ANSWER";
+            d3.ControlType = "RADIO_BUTTON";
+            d3.Name = "原住民血統";
+            d3.CanStudentEdit = true;
+            d3.CanTeacherEdit = true;
+            d3.CanPrint = true;
+            d3.Items = "<Items><item key='有' has_remark='True' /><item key='無' has_remark='False' /></Items>";
+            retVal.Add(d3);
+
+            UDTQuestionsDataDef d4 = new UDTQuestionsDataDef();
+            d4.Group = "家庭狀況";
+            d4.QuestionType = "Relative";
+            d4.ControlType = "GRID_TEXTBOX";
+            d4.Name = "直系血親_原國籍";
+            d4.CanStudentEdit = true;
+            d4.CanTeacherEdit = true;
+            d4.CanPrint = true;
+            retVal.Add(d4);
 
             return retVal;
         }

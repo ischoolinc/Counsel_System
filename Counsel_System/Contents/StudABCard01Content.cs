@@ -528,9 +528,17 @@ namespace Counsel_System.Contents
                 if (_udtSrFlp05.Data == radioButton1.Text)
                 {
                     radioButton1.Checked = true;
-                    string[] str = _udtSrFlp05.Remark.Split('_');
-                    txtParents.Text = str[0];
-                    txtGroupName.Text = str[1];
+                    if (!string.IsNullOrWhiteSpace(_udtSrFlp05.Remark) && _udtSrFlp05.Remark.Contains("_"))
+                    {
+                        string[] str = _udtSrFlp05.Remark.Split('_');
+                        txtParents.Text = str[0];
+                        txtGroupName.Text = str[1];
+                    }
+                    else
+                    {
+                        txtParents.Text = "";
+                        txtGroupName.Text = "";
+                    }
                 }
                 else
                 {

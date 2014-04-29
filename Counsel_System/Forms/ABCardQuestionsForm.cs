@@ -125,6 +125,10 @@ namespace Counsel_System.Forms
                         else
                             dgItemEnable(true);
 
+                        //本人概況_原住民血統項目不提供編輯
+                        if (data.Group == "本人概況" && data.Name == "原住民血統")
+                            dgItemEnable(false);
+
                    
                         // 當 checkbox radio 才可以使用可備註
                         if (data.QControlType == EnumControlType.CHECKBOX || data.QControlType == EnumControlType.RADIO_BUTTON)

@@ -169,13 +169,13 @@
   <data name="ABCardTransferDataOldMapping" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\xml\abcardtransferdataoldmapping.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="輔導資料紀錄表範本" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\templates\輔導資料紀錄表範本.doc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="綜合表現紀錄表合併欄位說明" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\templates\綜合表現紀錄表合併欄位說明.doc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="晤談紀錄簽認表樣版" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\templates\晤談紀錄簽認表樣版.xls;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="輔導資料紀錄表範本" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\輔導資料紀錄表範本.doc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

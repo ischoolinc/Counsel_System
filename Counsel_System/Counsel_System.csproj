@@ -797,12 +797,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\輔導資料紀錄表範本.doc" />
     <None Include="Templates\學生輔導晤談紀錄表-樣版.doc" />
     <None Include="Templates\晤談紀錄簽認表樣版.xls" />
     <None Include="Templates\綜合表現紀錄表-樣版.doc" />
     <None Include="Templates\綜合表現紀錄表合併欄位說明.doc" />
     <None Include="Templates\輔導紀錄_樣板.doc" />
-    <None Include="Templates\輔導資料紀錄表範本.doc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2205,7 +2205,16 @@ namespace Counsel_System
                 string str = "<root>" + strXML + "</root>";
                 XElement elmRoot = XElement.Parse(str);
                 foreach (XElement elm in elmRoot.Elements("Item"))
-                    retVal.Add(elm.Attribute("name").Value + "：" + elm.Attribute("value").Value);
+                {
+                    if (elm.Attribute("name") !=null)
+                    {
+                        string value = "";
+                        if (elm.Attribute("value") != null)
+                            value = elm.Attribute("value").Value;
+
+                        retVal.Add(elm.Attribute("name").Value + "：" + value);
+                    }                    
+                }
             }
             return string.Join("；", retVal.ToArray());
         }

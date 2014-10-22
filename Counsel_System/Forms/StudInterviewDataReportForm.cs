@@ -12,6 +12,7 @@ using System.IO;
 using Counsel_System.DAO;
 using K12.Data;
 using System.Xml.Linq;
+using Aspose.Words.Reporting;
 
 namespace Counsel_System.Forms
 {
@@ -326,8 +327,9 @@ namespace Counsel_System.Forms
                 }
                 dt.Rows.Add(dr);
                Document docTemplate = new Document(new MemoryStream(_DocTemplate));
-               DocumentBuilder _builder = new DocumentBuilder(docTemplate);
-               docTemplate.MailMerge.MergeField += new Aspose.Words.Reporting.MergeFieldEventHandler(MailMerge_MergeField);
+               docTemplate.MailMerge.FieldMergingCallback = new InsertDocumentAtMailMergeHandler();
+               //DocumentBuilder _builder = new DocumentBuilder(docTemplate);
+               //docTemplate.MailMerge.MergeField += new Aspose.Words.Reporting.MergeFieldEventHandler(MailMerge_MergeField);
                 docTemplate.MailMerge.RemoveEmptyParagraphs = true;
                 docTemplate.MailMerge.Execute(dt);
                 docTemplate.MailMerge.DeleteFields();
@@ -337,10 +339,24 @@ namespace Counsel_System.Forms
 
         }
 
-        void MailMerge_MergeField(object sender, Aspose.Words.Reporting.MergeFieldEventArgs e)
+        private class InsertDocumentAtMailMergeHandler : IFieldMergingCallback
         {
-            
+            public void FieldMerging(FieldMergingArgs e)
+            {
+                DocumentBuilder _builder = new DocumentBuilder(e.Document);
+
+            }
+
+            public void ImageFieldMerging(ImageFieldMergingArgs args)
+            {
+                
+            }
         }
+
+        //void MailMerge_MergeField(object sender, Aspose.Words.Reporting.MergeFieldEventArgs e)
+        //{
+            
+        //}
 
         /// <summary>
         /// 解析 XML 內資料

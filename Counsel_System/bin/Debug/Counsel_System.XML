@@ -4647,14 +4647,14 @@
             <param name="StudentIDList"></param>
             <returns></returns>
         </member>
-        <member name="M:Counsel_System.Utility.HorizontallyMergeCells(Aspose.Words.Cell,Aspose.Words.Cell)">
+        <member name="M:Counsel_System.Utility.HorizontallyMergeCells(Aspose.Words.Tables.Cell,Aspose.Words.Tables.Cell)">
             <summary>
             處理 Aspose Word 水平合併(左至右)(單一)
             </summary>
             <param name="left"></param>
             <param name="right"></param>
         </member>
-        <member name="M:Counsel_System.Utility.VerticallyMergeCells(Aspose.Words.Cell,Aspose.Words.Cell)">
+        <member name="M:Counsel_System.Utility.VerticallyMergeCells(Aspose.Words.Tables.Cell,Aspose.Words.Tables.Cell)">
             <summary>
             Aspose Word 垂直合併上至下(單一)
             </summary>

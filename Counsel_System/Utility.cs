@@ -12,6 +12,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Counsel_System.DAO;
+using Aspose.Words.Tables;
 
 namespace Counsel_System
 {

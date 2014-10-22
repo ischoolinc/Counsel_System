@@ -125,10 +125,6 @@ D:\GitHub2\輔導系統\Counsel_System\Counsel_System\obj\Debug\Counsel_System.c
 D:\GitHub2\輔導系統\Counsel_System\Counsel_System\obj\Debug\Counsel_System.dll
 D:\GitHub2\輔導系統\Counsel_System\Counsel_System\obj\Debug\Counsel_System.pdb
 D:\GitHub2\輔導系統\Counsel_System\Counsel_System\obj\Debug\Counsel_System.csprojResolveAssemblyReference.cache
-D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\bin\Debug\Counsel_System.XML
-D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\bin\Debug\Counsel_System.dll
-D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\bin\Debug\Counsel_System.pdb
-D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.csprojResolveAssemblyReference.cache
 D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.Contents.BasicInfo.resources
 D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.Contents.CounselStudentListAContent.resources
 D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.Contents.CounselStudentListBContent.resources
@@ -183,5 +179,8 @@ D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel
 D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.UI.QuestionUIDefinition.resources
 D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.UI.SubjectUIDefinition.resources
 D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.csproj.GenerateResource.Cache
+D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\bin\Debug\Counsel_System.XML
+D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\bin\Debug\Counsel_System.dll
+D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\bin\Debug\Counsel_System.pdb
 D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.dll
 D:\GitProjModules\ischoolDesktop\Counsel_System\Counsel_System\obj\Debug\Counsel_System.pdb

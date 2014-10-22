@@ -13,6 +13,8 @@ using Counsel_System.DAO;
 using K12.Data;
 using System.Xml.Linq;
 using Aspose.Words.Drawing;
+using Aspose.Words.Reporting;
+using Aspose.Words.Tables;
 
 namespace Counsel_System.Forms
 {
@@ -1325,15 +1327,61 @@ namespace Counsel_System.Forms
             }
             Document document = new Document();
             document = docTemplae;
-
+            doc.MailMerge.FieldMergingCallback = new InsertDocumentAtMailMergeHandler();
             doc.Sections.Add(doc.ImportNode(document.Sections[0], true));
             
-            doc.MailMerge.MergeField += new Aspose.Words.Reporting.MergeFieldEventHandler(MailMerge_MergeField);
+            //doc.MailMerge.MergeField += new Aspose.Words.Reporting.MergeFieldEventHandler(MailMerge_MergeField);
+            
             doc.MailMerge.Execute(_dtTable);
             doc.MailMerge.RemoveEmptyParagraphs = true;
             doc.MailMerge.DeleteFields();            
             _bgWorker.ReportProgress(95);
             e.Result = doc;
+        }
+
+        private class InsertDocumentAtMailMergeHandler : IFieldMergingCallback
+        {
+            void IFieldMergingCallback.FieldMerging(FieldMergingArgs e)
+            {
+                if (e.FieldName == "入學照片" || e.FieldName == "入學照片2" || e.FieldName == "畢業照片" || e.FieldName == "畢業照片2")
+                {
+                    if (e.FieldValue != null && e.FieldValue.ToString() != "")
+                    {
+                        byte[] photo = Convert.FromBase64String(e.FieldValue.ToString()); //e.FieldValue as byte[];
+
+                        if (photo != null && photo.Length > 0)
+                        {
+                            DocumentBuilder photoBuilder = new DocumentBuilder(e.Document);
+                            photoBuilder.MoveToField(e.Field, true);
+                            e.Field.Remove();
+                            Shape photoShape = new Shape(e.Document, ShapeType.Image);
+                            photoShape.ImageData.SetImage(photo);
+                            photoShape.WrapType = WrapType.Inline;
+                            Cell cell = photoBuilder.CurrentParagraph.ParentNode as Cell;
+                            //cell.CellFormat.LeftPadding = 0;
+                            //cell.CellFormat.RightPadding = 0;
+                            if (e.FieldName == "入學照片" || e.FieldName == "畢業照片")
+                            {
+                                // 1吋
+                                photoShape.Width = ConvertUtil.MillimeterToPoint(25);
+                                photoShape.Height = ConvertUtil.MillimeterToPoint(35);
+                            }
+                            else
+                            {
+                                //2吋
+                                photoShape.Width = ConvertUtil.MillimeterToPoint(35);
+                                photoShape.Height = ConvertUtil.MillimeterToPoint(45);
+                            }
+                            photoBuilder.InsertNode(photoShape);
+                        }
+                    }
+                }
+            }
+
+            void IFieldMergingCallback.ImageFieldMerging(ImageFieldMergingArgs e)
+            {
+ 
+            }
         }
 
         /// <summary>
@@ -1348,42 +1396,10 @@ namespace Counsel_System.Forms
                 _ErrorList.Add(_ErrMsg1+key);
         }
 
-        void MailMerge_MergeField(object sender, Aspose.Words.Reporting.MergeFieldEventArgs e)
-        {
-            if (e.FieldName == "入學照片" || e.FieldName == "入學照片2" ||e.FieldName == "畢業照片" || e.FieldName == "畢業照片2")
-            {
-                if (e.FieldValue != null && e.FieldValue.ToString()!="")
-                {
-                    byte[] photo = Convert.FromBase64String(e.FieldValue.ToString()); //e.FieldValue as byte[];
-
-                    if (photo != null && photo.Length > 0)
-                    {
-                        DocumentBuilder photoBuilder = new DocumentBuilder(e.Document);
-                        photoBuilder.MoveToField(e.Field, true);
-                        e.Field.Remove();
-                        Shape photoShape = new Shape(e.Document, ShapeType.Image);
-                        photoShape.ImageData.SetImage(photo);
-                        photoShape.WrapType = WrapType.Inline;
-                        Cell cell = photoBuilder.CurrentParagraph.ParentNode as Cell;
-                        //cell.CellFormat.LeftPadding = 0;
-                        //cell.CellFormat.RightPadding = 0;
-                        if (e.FieldName == "入學照片" || e.FieldName == "畢業照片")
-                        {
-                            // 1吋
-                            photoShape.Width = ConvertUtil.MillimeterToPoint(25);
-                            photoShape.Height = ConvertUtil.MillimeterToPoint(35);
-                        }
-                        else
-                        {
-                            //2吋
-                            photoShape.Width = ConvertUtil.MillimeterToPoint(35);
-                            photoShape.Height = ConvertUtil.MillimeterToPoint(45);
-                        }
-                        photoBuilder.InsertNode(photoShape);
-                    }
-                }
-            }
-        }
+        //void MailMerge_MergeField(object sender, Aspose.Words.Reporting.MergeFieldEventArgs e)
+        //{
+           
+        //}
 
         private void btnExit_Click(object sender, EventArgs e)
         {

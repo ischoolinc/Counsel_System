@@ -550,12 +550,15 @@ namespace Counsel_System
             // 載入綜合表現題目檢查
             //DAO.ABCardQuestionDataManager man = new DAO.ABCardQuestionDataManager();           
 
-            //// 清空綜合表現題目 (Beta 用)
-            //if(DAO.UDTTransfer.ABUDTQuestionsDataSelectAll().Count>0)
-            //    DAO.UDTTransfer.ABUDTQuestionsDataDeleteAll();
 
             try
             {
+
+                // 檢查與清空綜合表現題目 (Beta 用，修正題目用
+                int cot = DAO.UDTTransfer.ABUDTQuestionsDataSelectAll().Count;
+                if (cot < 80 || cot > 120)
+                    DAO.UDTTransfer.ABUDTQuestionsDataDeleteAll();
+
                 // 更新綜合紀錄表題目
                 DAO.UDTTransfer.CreateCounselUDTTable();
                 Utility.UpdateABQuestions();
@@ -569,39 +572,39 @@ namespace Counsel_System
                 FactoryProvider.RowFactory.Add(new ValidationRule.CounselRowValidatorFactory());
                 #endregion
 
-                // 檢查是否有樣板
-                List<DAO.UDT_ABCardTemplateDefinitionDef> ABCardTemplate = DAO.UDTTransfer.GetABCardTemplate();
-                // 沒有樣板時
-                if (ABCardTemplate.Count == 0)
-                {
-                    List<DAO.UDT_ABCardTemplateDefinitionDef> insertUDT = new List<DAO.UDT_ABCardTemplateDefinitionDef>();
-                    XElement elmRoot = XElement.Parse(Properties.Resources.ABCardTemplate);
-                    foreach (XElement elm in elmRoot.Elements("Subject"))
-                    {
-                        bool checkInsert = true;
+                //// 檢查是否有樣板
+                //List<DAO.UDT_ABCardTemplateDefinitionDef> ABCardTemplate = DAO.UDTTransfer.GetABCardTemplate();
+                //// 沒有樣板時
+                //if (ABCardTemplate.Count == 0)
+                //{
+                //    List<DAO.UDT_ABCardTemplateDefinitionDef> insertUDT = new List<DAO.UDT_ABCardTemplateDefinitionDef>();
+                //    XElement elmRoot = XElement.Parse(Properties.Resources.ABCardTemplate);
+                //    foreach (XElement elm in elmRoot.Elements("Subject"))
+                //    {
+                //        bool checkInsert = true;
 
-                        foreach (DAO.UDT_ABCardTemplateDefinitionDef rec in ABCardTemplate)
-                            if (rec.SubjectName.Trim() == elm.Attribute("label").Value.Trim())
-                                checkInsert = false;
+                //        foreach (DAO.UDT_ABCardTemplateDefinitionDef rec in ABCardTemplate)
+                //            if (rec.SubjectName.Trim() == elm.Attribute("label").Value.Trim())
+                //                checkInsert = false;
 
-                        if (checkInsert)
-                        {
-                            DAO.UDT_ABCardTemplateDefinitionDef abRec = new DAO.UDT_ABCardTemplateDefinitionDef();
-                            abRec.SubjectName = elm.Attribute("label").Value.Trim();
-                            abRec.Content = elm.ToString();
-                            int i;
-                            if (int.TryParse(abRec.SubjectName.Substring(0, 1), out i))
-                                abRec.Priority = i;
+                //        if (checkInsert)
+                //        {
+                //            DAO.UDT_ABCardTemplateDefinitionDef abRec = new DAO.UDT_ABCardTemplateDefinitionDef();
+                //            abRec.SubjectName = elm.Attribute("label").Value.Trim();
+                //            abRec.Content = elm.ToString();
+                //            int i;
+                //            if (int.TryParse(abRec.SubjectName.Substring(0, 1), out i))
+                //                abRec.Priority = i;
 
-                            insertUDT.Add(abRec);
-                        }
-                    }
-                    if (insertUDT.Count > 0)
-                        DAO.UDTTransfer.InsertABCardTemplate(insertUDT);
-                }
+                //            insertUDT.Add(abRec);
+                //        }
+                //    }
+                //    if (insertUDT.Count > 0)
+                //        DAO.UDTTransfer.InsertABCardTemplate(insertUDT);
+                //}
 
-                // 將樣板傳入
-                Global._ABCardTemplateTransfer.LoadAllTemplate(ABCardTemplate);
+                //// 將樣板傳入
+                //Global._ABCardTemplateTransfer.LoadAllTemplate(ABCardTemplate);
 
                 // 檢查是否有輔導相關設定標籤，沒有自動加入:輔導:認輔老師,輔導:輔導主任,輔導:輔導老師,
                 List<TagConfigRecord> tagList = TagConfig.SelectByCategoryAndPrefix(TagCategory.Teacher, "輔導");

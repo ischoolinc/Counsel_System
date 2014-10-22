@@ -60,7 +60,7 @@ namespace Counsel_System.Forms
             try
             {
                 string FilePath = Application.StartupPath + "\\Reports\\輔導晤談紀錄簽認表.xls";
-                wb.Save(FilePath, Aspose.Cells.FileFormatType.Excel2003);
+                wb.Save(FilePath,Aspose.Cells.FileFormatType.Excel2003);
                 System.Diagnostics.Process.Start(FilePath);
 
             }

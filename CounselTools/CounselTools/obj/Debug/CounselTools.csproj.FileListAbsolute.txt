@@ -1,0 +1,4 @@
+D:\GitProjModules\ischoolDesktop\Counsel_System\CounselTools\CounselTools\bin\Debug\CounselTools.dll
+D:\GitProjModules\ischoolDesktop\Counsel_System\CounselTools\CounselTools\bin\Debug\CounselTools.pdb
+D:\GitProjModules\ischoolDesktop\Counsel_System\CounselTools\CounselTools\obj\Debug\CounselTools.dll
+D:\GitProjModules\ischoolDesktop\Counsel_System\CounselTools\CounselTools\obj\Debug\CounselTools.pdb

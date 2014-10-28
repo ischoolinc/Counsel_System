@@ -14,6 +14,7 @@ namespace CounselTools
         string _GroupName, _StudentID;
         int _ErrorCount = 0, _TotalCount = 0;
         Dictionary<string, string> _ErrorDict = new Dictionary<string, string>();
+        
         public void SetGroupName(string GroupName)
         {
             _GroupName = GroupName;
@@ -49,47 +50,39 @@ namespace CounselTools
             // 本人概況	曾患特殊疾病	MULTI_ANSWER
             // 本人概況	體重	SEMESTER
 
-            if (Gobal._single_recordDict.ContainsKey(_StudentID))
-            {
-                foreach (DataRow dr in Gobal._single_recordDict[_StudentID])
-                {
-                    string key=dr["key"].ToString();
 
-                    if (key == _GroupName + "_血型")
-                    {
-                        if (dr["data"].ToString().Trim() == "")
-                        {
-                            _ErrorCount++;
+            #region SINGLE_ANSWER
+            List<string> chkItems1 = new List<string>();
+            chkItems1.Add("血型");
+            chkItems1.Add("宗教");
+            chkItems1.Add("原住民血統");
 
-                        }
-                        _TotalCount++;
-                    }
+            // SINGLE_ANSWER
+            _ErrorCount += CheckDataTransfer.CheckSINGLE_ANSWER_Error(_GroupName, chkItems1, _StudentID);
+            _TotalCount += chkItems1.Count;
+            #endregion
 
+            #region MULTI_ANSWER
+            List<string> chkItems2 = new List<string>();
+            chkItems2.Add("生理缺陷");
+            chkItems2.Add("曾患特殊疾病");
+            _ErrorCount += CheckDataTransfer.CheckMULTI_ANSWER_Error(_GroupName, chkItems2, _StudentID);
+            _TotalCount += chkItems2.Count;
 
-                    if (key == _GroupName + "_宗教")
-                    {
-                        if (dr["data"].ToString().Trim() == "")
-                        {
-                            _ErrorCount++;
+            #endregion
 
-                        }
-                        _TotalCount++;
-                    }
+            #region SEMESTER
+            List<string> chkItems3 = new List<string>();
+            chkItems3.Add("生理缺陷");
+            chkItems3.Add("曾患特殊疾病");
+            _ErrorCount += CheckDataTransfer.CheckSEMESTER_Error(_GroupName, chkItems3, _StudentID);
+            _TotalCount += chkItems3.Count;
 
-
-                    if (key == _GroupName + "_原住民血統")
-                    {
-                        if (dr["data"].ToString().Trim() == "")
-                        {
-                            _ErrorCount++;
-
-                        }
-                        _TotalCount++;
-                    }
-                }
-            }
-
+            #endregion
         }
+
+
+//        private void ChkDataSD(Dictionary<streing>)
 
         public string GetMessage()
         {

@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using FISCA.Data;
 using System.Data;
+using Aspose.Cells;
+using System.Windows.Forms;
+using FISCA.Presentation.Controls;
+using System.IO;
 
 namespace CounselTools
 {
@@ -67,6 +71,86 @@ namespace CounselTools
            }
 
            return retVal;
-       }      
+       }
+
+       /// <summary>
+       /// 匯出 Excel
+       /// </summary>
+       /// <param name="inputReportName"></param>
+       /// <param name="inputXls"></param>
+       public static void CompletedXls(string inputReportName, Workbook inputXls)
+       {
+           string reportName = inputReportName;
+
+           string path = Path.Combine(Application.StartupPath, "Reports");
+           if (!Directory.Exists(path))
+               Directory.CreateDirectory(path);
+           path = Path.Combine(path, reportName + ".xls");
+
+           Workbook wb = inputXls;
+
+           if (File.Exists(path))
+           {
+               int i = 1;
+               while (true)
+               {
+                   string newPath = Path.GetDirectoryName(path) + "\\" + Path.GetFileNameWithoutExtension(path) + (i++) + Path.GetExtension(path);
+                   if (!File.Exists(newPath))
+                   {
+                       path = newPath;
+                       break;
+                   }
+               }
+           }
+
+           try
+           {
+               wb.Save(path, SaveFormat.Excel97To2003);
+               System.Diagnostics.Process.Start(path);
+           }
+           catch
+           {
+               SaveFileDialog sd = new SaveFileDialog();
+               sd.Title = "另存新檔";
+               sd.FileName = reportName + ".xls";
+               sd.Filter = "Excel檔案 (*.xls)|*.xls|所有檔案 (*.*)|*.*";
+               if (sd.ShowDialog() == DialogResult.OK)
+               {
+                   try
+                   {
+                       wb.Save(sd.FileName, SaveFormat.Excel97To2003);
+
+                   }
+                   catch
+                   {
+                       MsgBox.Show("指定路徑無法存取。", "建立檔案失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       return;
+                   }
+               }
+           }
+       }
+
+
+       public static List<ClassStudent> GetClassStudentByStudentIDList(List<string> StudentIDList)
+       {
+           List<ClassStudent> retVal = new List<ClassStudent>();
+           if (StudentIDList.Count > 0)
+           {
+               QueryHelper qh = new QueryHelper();
+               string query = "select student.id as sid,class_name,seat_no,student_number,student.name as sname from student left join class on student.ref_class_id=class.id where student.id in (" + string.Join(",", StudentIDList.ToArray()) + ") order by class_name,seat_no,student_number";
+               DataTable dt = qh.Select(query);
+               foreach (DataRow dr in dt.Rows)
+               {
+                   ClassStudent cs = new ClassStudent();
+                   cs.ClassName = dr["class_name"].ToString();
+                   cs.SeatNo = dr["seat_no"].ToString();
+                   cs.StudentID = dr["sid"].ToString();
+                   cs.StudentNumber = dr["student_number"].ToString();
+                   cs.StudentName = dr["sname"].ToString();
+                   retVal.Add(cs);
+               }
+           }
+           return retVal;
+       }
     }
 }

@@ -6,41 +6,75 @@ using System.Data;
 
 namespace CounselTools
 {
+    /// <summary>
+    /// 生活感想
+    /// </summary>
     public class CheckProcess6:ICheckProcess
     {
+        string _GroupName;
+        ClassStudent _Student;
+        int _ErrorCount = 0, _TotalCount = 0;
+        Dictionary<string, string> _ErrorDict = new Dictionary<string, string>();
+
         public void SetGroupName(string GroupName)
         {
-            throw new NotImplementedException();
+            _GroupName = GroupName;
         }
 
-        public void SetStudentID(string StudentID)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public Dictionary<string, string> GetErrorData()
         {
-            throw new NotImplementedException();
+            return _ErrorDict;
         }
 
         public int GetErrorCount()
         {
-            throw new NotImplementedException();
+            return _ErrorCount;
         }
 
         public int GetTotalCount()
         {
-            throw new NotImplementedException();
+            return _TotalCount;
         }
 
         public void Start()
         {
-            throw new NotImplementedException();
+            #region SINGLE_ANSWER
+            List<string> chkItems1 = new List<string>();
+            // 動態建題目
+            List<string> items = new List<string>();
+            items.Add("內容1");
+            items.Add("內容2");
+            items.Add("內容3");
+            items.Add("填寫日期");
+
+            for(int g=1;g<=_Student.GradeYear;g++)
+            {
+                foreach(string str in items)
+                    chkItems1.Add(str+"_"+g);
+            }
+
+            // SINGLE_ANSWER
+            _ErrorCount += CheckDataTransfer.CheckSINGLE_ANSWER_Error(_GroupName, chkItems1, _Student);
+            _TotalCount += chkItems1.Count;
+            #endregion
         }
 
         public string GetMessage()
         {
-            throw new NotImplementedException();
+            if (_ErrorCount > 0)
+            {
+                return "未填/題數：" + _ErrorCount + "/" + _TotalCount;
+            }
+            else
+                return "";
+        }
+
+
+        public void SetStudent(ClassStudent Student)
+        {
+            _Student = Student;
         }
     }
 }

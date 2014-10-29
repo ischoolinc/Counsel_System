@@ -11,7 +11,8 @@ namespace CounselTools
     /// </summary>
     public class CheckProcess1:ICheckProcess
     {
-        string _GroupName, _StudentID;
+        string _GroupName;
+        ClassStudent _Student;
         int _ErrorCount = 0, _TotalCount = 0;
         Dictionary<string, string> _ErrorDict = new Dictionary<string, string>();
         
@@ -20,10 +21,6 @@ namespace CounselTools
             _GroupName = GroupName;
         }
 
-        public void SetStudentID(string StudentID)
-        {
-            _StudentID = StudentID;
-        }
 
         public Dictionary<string, string> GetErrorData()
         {
@@ -58,7 +55,7 @@ namespace CounselTools
             chkItems1.Add("原住民血統");
 
             // SINGLE_ANSWER
-            _ErrorCount += CheckDataTransfer.CheckSINGLE_ANSWER_Error(_GroupName, chkItems1, _StudentID);
+            _ErrorCount += CheckDataTransfer.CheckSINGLE_ANSWER_Error(_GroupName, chkItems1, _Student);
             _TotalCount += chkItems1.Count;
             #endregion
 
@@ -66,17 +63,21 @@ namespace CounselTools
             List<string> chkItems2 = new List<string>();
             chkItems2.Add("生理缺陷");
             chkItems2.Add("曾患特殊疾病");
-            _ErrorCount += CheckDataTransfer.CheckMULTI_ANSWER_Error(_GroupName, chkItems2, _StudentID);
+            _ErrorCount += CheckDataTransfer.CheckMULTI_ANSWER_Error(_GroupName, chkItems2, _Student);
             _TotalCount += chkItems2.Count;
 
             #endregion
 
             #region SEMESTER
+            // 這算一項
             List<string> chkItems3 = new List<string>();
-            chkItems3.Add("生理缺陷");
-            chkItems3.Add("曾患特殊疾病");
-            _ErrorCount += CheckDataTransfer.CheckSEMESTER_Error(_GroupName, chkItems3, _StudentID);
-            _TotalCount += chkItems3.Count;
+            chkItems3.Add("身高");
+            chkItems3.Add("體重");
+
+            if (CheckDataTransfer.CheckSEMESTER_Error(_GroupName, chkItems3, _Student) > 0)
+                _ErrorCount += 1;
+
+            _TotalCount += 1;
 
             #endregion
         }
@@ -88,10 +89,15 @@ namespace CounselTools
         {
             if (_ErrorCount > 0)
             {
-                return "" + _ErrorCount + "/" + _TotalCount;
+                return "未填/項數：" + _ErrorCount + "/" + _TotalCount;
             }
             else
                 return "";
+        }
+
+        public void SetStudent(ClassStudent Student)
+        {
+            _Student = Student;
         }
     }
 }

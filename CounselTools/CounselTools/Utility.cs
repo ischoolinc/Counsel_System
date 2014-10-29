@@ -137,7 +137,7 @@ namespace CounselTools
            if (StudentIDList.Count > 0)
            {
                QueryHelper qh = new QueryHelper();
-               string query = "select student.id as sid,class_name,seat_no,student_number,student.name as sname from student left join class on student.ref_class_id=class.id where student.id in (" + string.Join(",", StudentIDList.ToArray()) + ") order by class_name,seat_no,student_number";
+               string query = "select student.id as sid,class_name,class.grade_year,seat_no,student_number,student.name as sname from student left join class on student.ref_class_id=class.id where student.id in (" + string.Join(",", StudentIDList.ToArray()) + ") order by class_name,seat_no,student_number";
                DataTable dt = qh.Select(query);
                foreach (DataRow dr in dt.Rows)
                {
@@ -147,10 +147,16 @@ namespace CounselTools
                    cs.StudentID = dr["sid"].ToString();
                    cs.StudentNumber = dr["student_number"].ToString();
                    cs.StudentName = dr["sname"].ToString();
+                   cs.GradeYear=0;
+                   int gY;
+                   if (int.TryParse(dr["grade_year"].ToString(), out gY))
+                       cs.GradeYear = gY;
                    retVal.Add(cs);
                }
            }
            return retVal;
        }
+
+       
     }
 }

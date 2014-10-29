@@ -6,41 +6,63 @@ using System.Data;
 
 namespace CounselTools
 {
+    /// <summary>
+    /// 備註
+    /// </summary>
     public class CheckProcess8:ICheckProcess
     {
+        string _GroupName;
+        ClassStudent _Student;
+        int _ErrorCount = 0, _TotalCount = 0;
+        Dictionary<string, string> _ErrorDict = new Dictionary<string, string>();
+
         public void SetGroupName(string GroupName)
         {
-            throw new NotImplementedException();
+            _GroupName = GroupName;
         }
 
-        public void SetStudentID(string StudentID)
-        {
-            throw new NotImplementedException();
-        }
-
+     
         public Dictionary<string, string> GetErrorData()
         {
-            throw new NotImplementedException();
+            return _ErrorDict;
         }
 
         public int GetErrorCount()
         {
-            throw new NotImplementedException();
+            return _ErrorCount;
         }
 
         public int GetTotalCount()
         {
-            throw new NotImplementedException();
+            return _TotalCount;
         }
 
         public void Start()
         {
-            throw new NotImplementedException();
+            #region SINGLE_ANSWER
+            List<string> chkItems1 = new List<string>();
+            chkItems1.Add("備註");
+
+            // SINGLE_ANSWER
+            _ErrorCount += CheckDataTransfer.CheckSINGLE_ANSWER_Error(_GroupName, chkItems1, _Student);
+            _TotalCount += chkItems1.Count;
+            #endregion
         }
 
         public string GetMessage()
         {
-            throw new NotImplementedException();
+            if (_ErrorCount > 0)
+            {
+                return "未填/項數：" + _ErrorCount + "/" + _TotalCount;
+            }
+            else
+                return "";
+        }
+
+
+        public void SetStudent(ClassStudent Student)
+        {
+            _Student = Student;
         }
     }
 }

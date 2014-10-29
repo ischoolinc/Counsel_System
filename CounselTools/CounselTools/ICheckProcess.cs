@@ -12,7 +12,7 @@ namespace CounselTools
     {
         void SetGroupName(string GroupName);
 
-        void SetStudentID(string StudentID);
+        void SetStudent(ClassStudent Student);
 
         Dictionary<string, string> GetErrorData();
         int GetErrorCount();

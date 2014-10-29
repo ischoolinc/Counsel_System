@@ -9,6 +9,8 @@ namespace CounselTools
     {
         public string StudentID { get; set; }
         public string StudentNumber { get; set; }
+
+        public int GradeYear { get; set; }
         public string ClassName { get; set; }
         public string SeatNo { get; set; }
         public string StudentName { get; set; }

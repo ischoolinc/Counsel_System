@@ -63,7 +63,7 @@ namespace CounselTools
         {
             if (_ErrorCount > 0)
             {
-                return "未填/題數：" + _ErrorCount + "/" + _TotalCount;
+                return "未輸入完整：" + _ErrorCount + "/" + _TotalCount;
             }
             else
                 return "";

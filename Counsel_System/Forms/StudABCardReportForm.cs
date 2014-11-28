@@ -245,8 +245,10 @@ namespace Counsel_System.Forms
                 docTemplae = new Document(new MemoryStream(Properties.Resources.輔導資料紀錄表範本));
 
             if (_SelectTemplateType == SelectTemplateType.自訂)
-                docTemplae = _Config.Template.ToDocument();
-                
+            {
+                //docTemplae = _Config.Template.ToDocument();
+                docTemplae = new Document(new MemoryStream(_Config.Template.ToBinary()));                
+            }  
 
             _bgWorker.ReportProgress(1);
             // 加入樣板內合併欄位名稱
@@ -1731,8 +1733,10 @@ namespace Counsel_System.Forms
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 try
-                {
-                    _Config.Template.ToDocument().Save(saveDialog.FileName);
+                {  
+                     //   _Config.Template.ToDocument().Save(saveDialog.FileName); 改寫因 Aspose 新舊版相容問題
+                    Document saDoc = new Document(new MemoryStream(_Config.Template.ToBinary()));
+                    saDoc.Save(saveDialog.FileName);
                 }
                 catch (Exception ex)
                 {

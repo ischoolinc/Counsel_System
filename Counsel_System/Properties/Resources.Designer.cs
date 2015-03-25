@@ -313,9 +313,9 @@ namespace Counsel_System.Properties {
         /// <summary>
         ///   查詢類型 System.Byte[] 的當地語系化資源。
         /// </summary>
-        internal static byte[] 學生輔導晤談紀錄表_樣版 {
+        internal static byte[] 學生晤談記錄表_新範本 {
             get {
-                object obj = ResourceManager.GetObject("學生輔導晤談紀錄表_樣版", resourceCulture);
+                object obj = ResourceManager.GetObject("學生晤談記錄表_新範本", resourceCulture);
                 return ((byte[])(obj));
             }
         }

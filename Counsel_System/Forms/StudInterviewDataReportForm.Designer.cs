@@ -28,63 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.lnkDownload = new System.Windows.Forms.LinkLabel();
             this.btnPrint = new DevComponents.DotNetBar.ButtonX();
             this.btnExit = new DevComponents.DotNetBar.ButtonX();
-            this.lnkDownload = new System.Windows.Forms.LinkLabel();
-            this.lnkUpload = new System.Windows.Forms.LinkLabel();
-            this.groupPanel1.SuspendLayout();
+            this.linkUpData = new System.Windows.Forms.LinkLabel();
+            this.linkViewGeDin = new System.Windows.Forms.LinkLabel();
+            this.rbDEF_1 = new System.Windows.Forms.RadioButton();
+            this.rbDEF_2 = new System.Windows.Forms.RadioButton();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.SuspendLayout();
             // 
-            // groupPanel1
+            // lnkDownload
             // 
-            this.groupPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel1.Controls.Add(this.lnkUpload);
-            this.groupPanel1.Controls.Add(this.lnkDownload);
-            this.groupPanel1.Location = new System.Drawing.Point(15, 9);
-            this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(239, 81);
-            // 
-            // 
-            // 
-            this.groupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.groupPanel1.Style.BackColorGradientAngle = 90;
-            this.groupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.groupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderBottomWidth = 1;
-            this.groupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.groupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderLeftWidth = 1;
-            this.groupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderRightWidth = 1;
-            this.groupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderTopWidth = 1;
-            this.groupPanel1.Style.Class = "";
-            this.groupPanel1.Style.CornerDiameter = 4;
-            this.groupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.groupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.groupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
-            // 
-            // 
-            // 
-            this.groupPanel1.StyleMouseDown.Class = "";
-            this.groupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            // 
-            // 
-            // 
-            this.groupPanel1.StyleMouseOver.Class = "";
-            this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.groupPanel1.TabIndex = 0;
-            this.groupPanel1.Text = "樣板";
+            this.lnkDownload.AutoSize = true;
+            this.lnkDownload.BackColor = System.Drawing.Color.Transparent;
+            this.lnkDownload.Location = new System.Drawing.Point(87, 63);
+            this.lnkDownload.Name = "lnkDownload";
+            this.lnkDownload.Size = new System.Drawing.Size(86, 17);
+            this.lnkDownload.TabIndex = 0;
+            this.lnkDownload.TabStop = true;
+            this.lnkDownload.Text = "檢視預設範本";
+            this.lnkDownload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDownload_LinkClicked);
             // 
             // btnPrint
             // 
             this.btnPrint.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnPrint.BackColor = System.Drawing.Color.Transparent;
             this.btnPrint.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnPrint.Location = new System.Drawing.Point(101, 106);
+            this.btnPrint.Location = new System.Drawing.Point(135, 144);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 25);
             this.btnPrint.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -97,7 +68,7 @@
             this.btnExit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnExit.Location = new System.Drawing.Point(182, 106);
+            this.btnExit.Location = new System.Drawing.Point(216, 144);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 25);
             this.btnExit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -105,52 +76,102 @@
             this.btnExit.Text = "離開";
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // lnkDownload
+            // linkUpData
             // 
-            this.lnkDownload.AutoSize = true;
-            this.lnkDownload.Location = new System.Drawing.Point(21, 17);
-            this.lnkDownload.Name = "lnkDownload";
-            this.lnkDownload.Size = new System.Drawing.Size(86, 17);
-            this.lnkDownload.TabIndex = 0;
-            this.lnkDownload.TabStop = true;
-            this.lnkDownload.Text = "下載目前樣版";
-            this.lnkDownload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDownload_LinkClicked);
+            this.linkUpData.AutoSize = true;
+            this.linkUpData.BackColor = System.Drawing.Color.Transparent;
+            this.linkUpData.Location = new System.Drawing.Point(184, 103);
+            this.linkUpData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkUpData.Name = "linkUpData";
+            this.linkUpData.Size = new System.Drawing.Size(34, 17);
+            this.linkUpData.TabIndex = 3;
+            this.linkUpData.TabStop = true;
+            this.linkUpData.Text = "上傳";
+            this.linkUpData.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUpData_LinkClicked);
             // 
-            // lnkUpload
+            // linkViewGeDin
             // 
-            this.lnkUpload.AutoSize = true;
-            this.lnkUpload.Location = new System.Drawing.Point(137, 17);
-            this.lnkUpload.Name = "lnkUpload";
-            this.lnkUpload.Size = new System.Drawing.Size(86, 17);
-            this.lnkUpload.TabIndex = 1;
-            this.lnkUpload.TabStop = true;
-            this.lnkUpload.Text = "上傳自訂樣版";
-            this.lnkUpload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkUpload_LinkClicked);
+            this.linkViewGeDin.AutoSize = true;
+            this.linkViewGeDin.BackColor = System.Drawing.Color.Transparent;
+            this.linkViewGeDin.Location = new System.Drawing.Point(87, 103);
+            this.linkViewGeDin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkViewGeDin.Name = "linkViewGeDin";
+            this.linkViewGeDin.Size = new System.Drawing.Size(86, 17);
+            this.linkViewGeDin.TabIndex = 4;
+            this.linkViewGeDin.TabStop = true;
+            this.linkViewGeDin.Text = "檢視自訂範本";
+            this.linkViewGeDin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkViewGeDin_LinkClicked);
+            // 
+            // rbDEF_1
+            // 
+            this.rbDEF_1.AutoSize = true;
+            this.rbDEF_1.BackColor = System.Drawing.Color.Transparent;
+            this.rbDEF_1.Checked = true;
+            this.rbDEF_1.Location = new System.Drawing.Point(60, 65);
+            this.rbDEF_1.Name = "rbDEF_1";
+            this.rbDEF_1.Size = new System.Drawing.Size(14, 13);
+            this.rbDEF_1.TabIndex = 6;
+            this.rbDEF_1.TabStop = true;
+            this.rbDEF_1.UseVisualStyleBackColor = false;
+            // 
+            // rbDEF_2
+            // 
+            this.rbDEF_2.AutoSize = true;
+            this.rbDEF_2.BackColor = System.Drawing.Color.Transparent;
+            this.rbDEF_2.CausesValidation = false;
+            this.rbDEF_2.Location = new System.Drawing.Point(60, 105);
+            this.rbDEF_2.Margin = new System.Windows.Forms.Padding(4);
+            this.rbDEF_2.Name = "rbDEF_2";
+            this.rbDEF_2.Size = new System.Drawing.Size(14, 13);
+            this.rbDEF_2.TabIndex = 5;
+            this.rbDEF_2.UseVisualStyleBackColor = false;
+            // 
+            // labelX1
+            // 
+            this.labelX1.AutoSize = true;
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(22, 21);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(114, 21);
+            this.labelX1.TabIndex = 7;
+            this.labelX1.Text = "請選擇列印設定：";
             // 
             // StudInterviewDataReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(273, 141);
+            this.ClientSize = new System.Drawing.Size(303, 181);
+            this.Controls.Add(this.labelX1);
+            this.Controls.Add(this.rbDEF_1);
+            this.Controls.Add(this.rbDEF_2);
+            this.Controls.Add(this.linkUpData);
+            this.Controls.Add(this.linkViewGeDin);
             this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.lnkDownload);
             this.Controls.Add(this.btnPrint);
-            this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
             this.Name = "StudInterviewDataReportForm";
             this.Text = "學生輔導晤談紀錄表";
             this.Load += new System.EventHandler(this.StudInterviewDataReportForm_Load);
-            this.groupPanel1.ResumeLayout(false);
-            this.groupPanel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private DevComponents.DotNetBar.Controls.GroupPanel groupPanel1;
-        private System.Windows.Forms.LinkLabel lnkUpload;
         private System.Windows.Forms.LinkLabel lnkDownload;
         private DevComponents.DotNetBar.ButtonX btnPrint;
         private DevComponents.DotNetBar.ButtonX btnExit;
+        private System.Windows.Forms.LinkLabel linkUpData;
+        private System.Windows.Forms.LinkLabel linkViewGeDin;
+        private System.Windows.Forms.RadioButton rbDEF_1;
+        private System.Windows.Forms.RadioButton rbDEF_2;
+        private DevComponents.DotNetBar.LabelX labelX1;
     }
 }

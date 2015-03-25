@@ -727,8 +727,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\QuestionGroupPanel.resx">
       <DependentUpon>QuestionGroupPanel.cs</DependentUpon>
@@ -799,8 +799,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\學生晤談記錄表_新範本.docx" />
     <None Include="Resources\輔導資料紀錄表範本.doc" />
-    <None Include="Templates\學生輔導晤談紀錄表-樣版.doc" />
     <None Include="Templates\晤談紀錄簽認表樣版.xls" />
     <None Include="Templates\綜合表現紀錄表-樣版.doc" />
     <None Include="Templates\綜合表現紀錄表合併欄位說明.doc" />

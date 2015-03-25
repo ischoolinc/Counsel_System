@@ -65,21 +65,6 @@ namespace Counsel_System
 
             };
 
-            // 匯出綜合紀錄表舊資料
-            rbItem1["匯出"].Items["匯出綜合紀錄表(舊)"].Click += delegate 
-            {
-                if (K12.Presentation.NLDPanels.Student.SelectedSource.Count > 0)
-                {
-                    ImportExport.ExportABCardData eap = new ImportExport.ExportABCardData(K12.Presentation.NLDPanels.Student.SelectedSource);
-                    eap.Go();
-                }
-                else
-                {
-                    FISCA.Presentation.Controls.MsgBox.Show("請選擇學生!");
-                }
-            };
-
-
             // 測驗
             if (Utility.CheckAddContent(PermissionCode.輔導相關測驗_資料項目))
                 K12.Presentation.NLDPanels.Student.AddDetailBulider(new FISCA.Presentation.DetailBulider<Contents.StudQuizDataContent>());
@@ -105,10 +90,6 @@ namespace Counsel_System
 
             if (Utility.CheckAddContent(PermissionCode.輔導學生_資料項目))
                 K12.Presentation.NLDPanels.Teacher.AddDetailBulider(new FISCA.Presentation.DetailBulider<Contents.CounselStudentListBContent>());
-
-            // AB Card
-            if (Utility.CheckAddContent(PermissionCode.綜合表現紀錄表_資料項目))
-                K12.Presentation.NLDPanels.Student.AddDetailBulider<Counsel_System.Contents.BasicInfo>();
 
             // 輔導自訂欄位
             if (Utility.CheckAddContent(PermissionCode.輔導自訂欄位_資料項目))

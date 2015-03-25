@@ -13,24 +13,33 @@ using Counsel_System.DAO;
 using K12.Data;
 using System.Xml.Linq;
 using Aspose.Words.Reporting;
+using FISCA.Presentation.Controls;
+using K12.Data.Configuration;
+using System.Xml;
 
 namespace Counsel_System.Forms
 {
     public partial class StudInterviewDataReportForm : FISCA.Presentation.Controls.BaseForm
     {
-        private string _ReportName="學生輔導紀錄表樣板";
+        private string _ReportName = "學生輔導晤談紀錄表_樣版";
         private ReportConfiguration _Config;
         UDTTransfer _UDTTransfer;
         BackgroundWorker _bgWorker;
-        List<Dictionary<string,string>> _dataDictList;
-        public enum SelectType {學生,教師}
+        List<Dictionary<string, string>> _dataDictList;
+
+        public enum SelectType { 學生, 教師 }
+
         Dictionary<string, StudentRecord> _studDataDict;
         List<string> _studIDList;
         SelectType _UserSelectType;
         List<string> _TeacherIDList;
-        // 樣板
-        byte[] _DocTemplate;
 
+        private bool 是否使用範本 { get; set; }
+
+        /// <summary>
+        /// 建構子
+        /// </summary>
+        /// <param name="type"></param>
         public StudInterviewDataReportForm(SelectType type)
         {
             InitializeComponent();
@@ -38,67 +47,68 @@ namespace Counsel_System.Forms
             _studIDList = new List<string>();
             _TeacherIDList = new List<string>();
             _studDataDict = new Dictionary<string, StudentRecord>();
-            _bgWorker= new BackgroundWorker ();
-            _dataDictList= new List<Dictionary<string,string>>();
+            _bgWorker = new BackgroundWorker();
+            _dataDictList = new List<Dictionary<string, string>>();
             _UserSelectType = type;
-            _bgWorker.DoWork+=new DoWorkEventHandler(_bgWorker_DoWork);
-            _bgWorker.RunWorkerCompleted+=new RunWorkerCompletedEventHandler(_bgWorker_RunWorkerCompleted);
+            _bgWorker.DoWork += new DoWorkEventHandler(_bgWorker_DoWork);
+            _bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(_bgWorker_RunWorkerCompleted);
         }
 
-        void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        /// <summary>
+        /// FormLoad
+        /// </summary>
+        private void StudInterviewDataReportForm_Load(object sender, EventArgs e)
         {
-            btnPrint.Enabled = true;
-            Document doc = (Document)e.Result;
-            string _FilePathAndName = "";
-            // 當沒有設定檔案名稱
-            if (string.IsNullOrEmpty(_FilePathAndName))
+            this.MaximumSize = this.MinimumSize = this.Size;
+            _Config = new ReportConfiguration(_ReportName);
+
+            #region 取得上次列印設定值
+
+            ConfigData cd = K12.Data.School.Configuration[_ReportName];
+            string Mode = cd["Setup"];
+            if (!string.IsNullOrEmpty(Mode))
             {
-                SaveFileDialog sd = new SaveFileDialog();
-                sd.Title = "另存新檔";
-                sd.FileName = "晤談紀錄表.doc";
-                sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
-                if (sd.ShowDialog() == DialogResult.OK)
+                bool check = false;
+                if (bool.TryParse(Mode, out check))
                 {
-                    try
+                    if (check) //如果是bool
                     {
-                        doc.Save(sd.FileName, Aspose.Words.SaveFormat.Doc);
-                        System.Diagnostics.Process.Start(sd.FileName);
+                        rbDEF_2.Checked = true;
                     }
-                    catch
+                    else
                     {
-                        MessageBox.Show("指定路徑無法存取。", "建立檔案失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        rbDEF_1.Checked = true;
                     }
+                }
+                else
+                {
+                    rbDEF_1.Checked = true;
                 }
             }
             else
             {
-                try
-                {
-                    doc.Save(_FilePathAndName, SaveFormat.Doc);
-                        System.Diagnostics.Process.Start(_FilePathAndName);
-                }
-                catch
-                {
-                    SaveFileDialog sd = new SaveFileDialog();
-                    sd.Title = "另存新檔";
-                    sd.FileName = "晤談紀錄表1.doc";
-                    sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
-                    if (sd.ShowDialog() == DialogResult.OK)
-                    {
-                        try
-                        {
-                            doc.Save(sd.FileName, Aspose.Words.SaveFormat.Doc);
-                            System.Diagnostics.Process.Start(sd.FileName);
-                        }
-                        catch
-                        {
-                            MessageBox.Show("指定路徑無法存取。", "建立檔案失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
-                }
+                rbDEF_1.Checked = true;
             }
+
+            #endregion
+        }
+
+        /// <summary>
+        /// 開始列印
+        /// </summary>
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            btnPrint.Enabled = false;
+
+            if (_UserSelectType == SelectType.學生)
+                _studIDList = K12.Presentation.NLDPanels.Student.SelectedSource;
+            else
+                _TeacherIDList = K12.Presentation.NLDPanels.Teacher.SelectedSource;
+
+            是否使用範本 = rbDEF_2.Checked;
+
+            _bgWorker.RunWorkerAsync();
+
         }
 
         void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -107,6 +117,7 @@ namespace Counsel_System.Forms
             _dataDictList.Clear();
             string SchoolName = School.ChineseName;
 
+            SaveConfig(是否使用範本);
 
             Dictionary<int, string> intTeacherNameDict = new Dictionary<int, string>();
             foreach (TeacherRecord tr in Teacher.SelectAll())
@@ -115,16 +126,16 @@ namespace Counsel_System.Forms
                     continue;
 
                 int tid = int.Parse(tr.ID);
-                string TName=tr.Name;
+                string TName = tr.Name;
                 if (!string.IsNullOrWhiteSpace(tr.Nickname))
                     TName = tr.Name + "(" + tr.Nickname + ")";
-                
+
                 intTeacherNameDict.Add(tid, TName);
             }
 
             if (_UserSelectType == SelectType.學生)
             {
-                
+                #region 學生
                 // 取得學生資料
                 foreach (StudentRecord stud in Student.SelectByIDs(_studIDList))
                     _studDataDict.Add(stud.ID, stud);
@@ -155,18 +166,6 @@ namespace Counsel_System.Forms
 
                     List<UDT_CounselStudentInterviewRecordDef> studInterviewList = (from da in dataList where da.StudentID == sid orderby da.InterviewDate select da).ToList();
 
-                    //// 當沒有資料顯示一張有名稱空的
-                    //if (studInterviewList.Count == 0)
-                    //{
-                    //    Dictionary<string, string> mapDict1 = new Dictionary<string, string>();
-                    //    mapDict1.Add("校名", SchoolName);
-                    //    mapDict1.Add("學生姓名", studName);
-                    //    mapDict1.Add("學號", StudNumber);
-                    //    mapDict1.Add("班級", ClassName);
-                    //    mapDict1.Add("座號", StudSeatNo);
-                    //    _dataDictList.Add(mapDict1);
-                    //}
-
                     foreach (UDT_CounselStudentInterviewRecordDef data in studInterviewList)
                     {
                         Dictionary<string, string> mapDict = new Dictionary<string, string>();
@@ -195,10 +194,12 @@ namespace Counsel_System.Forms
                     }
 
                 }
+                #endregion
             }
 
             if (_UserSelectType == SelectType.教師)
             {
+                #region 教師
                 List<int> sortStudIDList = new List<int>();
                 // 透過教師取得所屬晤談紀錄
                 List<UDT_CounselStudentInterviewRecordDef> InterviewRecorT = _UDTTransfer.GetCounselStudentInterviewRecordByTeacherIDList(_TeacherIDList);
@@ -221,18 +222,18 @@ namespace Counsel_System.Forms
                     if (!InterviewRecorStudDict.ContainsKey(sid))
                         InterviewRecorStudDict.Add(sid, rec);
                 }
-                
+
                 // 轉換教師ID int 
                 List<int> intTeacherIDList = new List<int>();
                 foreach (string tid in _TeacherIDList)
                     intTeacherIDList.Add(int.Parse(tid));
 
-                sortStudIDList = Utility.SortStudentID2(sortStudIDList);                
+                sortStudIDList = Utility.SortStudentID2(sortStudIDList);
                 // 組資料
                 foreach (int id in intTeacherIDList)
                 {
-                
-                    List<UDT_CounselStudentInterviewRecordDef> dataTT = (from data in InterviewRecorT where data.TeacherID == id orderby data.StudentID,data.InterviewDate  select data).ToList();
+
+                    List<UDT_CounselStudentInterviewRecordDef> dataTT = (from data in InterviewRecorT where data.TeacherID == id orderby data.StudentID, data.InterviewDate select data).ToList();
                     // 依班級順序、班級名稱、學生座號排序後加入
                     List<UDT_CounselStudentInterviewRecordDef> dataT = new List<UDT_CounselStudentInterviewRecordDef>();
                     foreach (int ssid in sortStudIDList)
@@ -283,13 +284,13 @@ namespace Counsel_System.Forms
                         _dataDictList.Add(mapDict);
                     }
                 }
-
+                #endregion
             }
 
             // word 資料合併
             Document doc = new Document();
             doc.Sections.Clear();
-                        
+
             // 比對欄位名稱放值
             List<string> mapFieldName = new List<string>();
             mapFieldName.Add("校名");
@@ -311,6 +312,29 @@ namespace Counsel_System.Forms
             mapFieldName.Add("內容要點");
             mapFieldName.Add("記錄者姓名");
 
+            //取得範本樣式
+
+            MemoryStream _template;
+            if (!是否使用範本)
+            {
+                _template = new MemoryStream(Properties.Resources.學生晤談記錄表_新範本);
+            }
+            else
+            {
+                ConfigData cd = K12.Data.School.Configuration[_ReportName];
+                XmlElement config = cd.GetXml("XmlData", null);
+                if (config != null)
+                {
+                    string templateBase64 = config.InnerText;
+                    byte[] _buffer = Convert.FromBase64String(templateBase64);
+                    _template = new MemoryStream(_buffer);
+                }
+                else
+                {
+                    _template = new MemoryStream(Properties.Resources.學生晤談記錄表_新範本);
+                }
+            }
+
 
             foreach (Dictionary<string, string> data in _dataDictList)
             {
@@ -326,17 +350,96 @@ namespace Counsel_System.Forms
                         dr[name] = data[name];
                 }
                 dt.Rows.Add(dr);
-               Document docTemplate = new Document(new MemoryStream(_DocTemplate));
-               docTemplate.MailMerge.FieldMergingCallback = new InsertDocumentAtMailMergeHandler();
-               //DocumentBuilder _builder = new DocumentBuilder(docTemplate);
-               //docTemplate.MailMerge.MergeField += new Aspose.Words.Reporting.MergeFieldEventHandler(MailMerge_MergeField);
-                docTemplate.MailMerge.RemoveEmptyParagraphs = true;
+
+                Document docTemplate = new Document(_template);
+
+                docTemplate.MailMerge.FieldMergingCallback = new InsertDocumentAtMailMergeHandler();
+                //已過時,改用Aspose.Words.Reporting.MailMergeCleanupOptions.RemoveEmptyParagraphs
+                //docTemplate.MailMerge.RemoveEmptyParagraphs = true;
+
+                docTemplate.MailMerge.CleanupOptions = Aspose.Words.Reporting.MailMergeCleanupOptions.RemoveEmptyParagraphs;
                 docTemplate.MailMerge.Execute(dt);
                 docTemplate.MailMerge.DeleteFields();
                 doc.Sections.Add(doc.ImportNode(docTemplate.Sections[0], true));
             }
             e.Result = doc;
 
+        }
+
+        /// <summary>
+        /// 記錄設定值
+        /// </summary>
+        private void SaveConfig(bool check)
+        {
+            ConfigData cd = K12.Data.School.Configuration[_ReportName];
+            cd["Setup"] = check.ToString();
+            cd.Save();
+
+            //XmlElement config = cd.GetXml("XmlData", null);
+            //if (config == null)
+            //{
+            //    config = new XmlDocument().CreateElement("XmlData");
+            //}
+            //string base64 = Convert.ToBase64String(_template.ToArray());
+            //config.InnerText = base64;
+            //cd.SetXml("XmlData", config);
+            //cd.Save();
+        }
+
+        void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnPrint.Enabled = true;
+            Document doc = (Document)e.Result;
+            string _FilePathAndName = "";
+            // 當沒有設定檔案名稱
+            if (string.IsNullOrEmpty(_FilePathAndName))
+            {
+                SaveFileDialog sd = new SaveFileDialog();
+                sd.Title = "另存新檔";
+                sd.FileName = "晤談紀錄表.docx";
+                sd.Filter = "Word檔案 (*.docx)|*.docx|所有檔案 (*.*)|*.*";
+                if (sd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        doc.Save(sd.FileName, Aspose.Words.SaveFormat.Docx);
+                        System.Diagnostics.Process.Start(sd.FileName);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("指定路徑無法存取。", "建立檔案失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                try
+                {
+                    doc.Save(_FilePathAndName, Aspose.Words.SaveFormat.Docx);
+                    System.Diagnostics.Process.Start(_FilePathAndName);
+                }
+                catch
+                {
+                    SaveFileDialog sd = new SaveFileDialog();
+                    sd.Title = "另存新檔";
+                    sd.FileName = "晤談紀錄表1.docx";
+                    sd.Filter = "Word檔案 (*.docx)|*.docx|所有檔案 (*.*)|*.*";
+                    if (sd.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            doc.Save(sd.FileName, Aspose.Words.SaveFormat.Docx);
+                            System.Diagnostics.Process.Start(sd.FileName);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("指定路徑無法存取。", "建立檔案失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                }
+            }
         }
 
         private class InsertDocumentAtMailMergeHandler : IFieldMergingCallback
@@ -349,20 +452,13 @@ namespace Counsel_System.Forms
 
             public void ImageFieldMerging(ImageFieldMergingArgs args)
             {
-                
+
             }
         }
-
-        //void MailMerge_MergeField(object sender, Aspose.Words.Reporting.MergeFieldEventArgs e)
-        //{
-            
-        //}
 
         /// <summary>
         /// 解析 XML 內資料
         /// </summary>
-        /// <param name="strData"></param>
-        /// <returns></returns>
         private string ParseUDTXML1(string strData)
         {
             string str = "";
@@ -375,7 +471,7 @@ namespace Counsel_System.Forms
             if (elmRoot != null)
             {
                 foreach (XElement elm in elmRoot.Elements("Item"))
-                {                    
+                {
                     if (elm.Attribute("remark") != null)
                     {
                         string rmk = elm.Attribute("name").Value + ":" + elm.Attribute("remark").Value;
@@ -391,109 +487,132 @@ namespace Counsel_System.Forms
             return str;
         }
 
-        private void StudInterviewDataReportForm_Load(object sender, EventArgs e)
-        {
-            this.MaximumSize = this.MinimumSize = this.Size;
-            _Config = new ReportConfiguration(_ReportName);
-            SetDefaultTemplate();
-        }
-
-        private void btnPrint_Click(object sender, EventArgs e)
-        {
-            btnPrint.Enabled = false;
-            // 樣板
-            _DocTemplate = _Config.Template.ToBinary();
-
-            if (_DocTemplate == null)
-            {
-                FISCA.Presentation.Controls.MsgBox.Show("樣板解析失敗!");
-                btnPrint.Enabled = true;
-                return;
-            }
-            if (_UserSelectType == SelectType.學生)
-                _studIDList = K12.Presentation.NLDPanels.Student.SelectedSource;
-            else
-                _TeacherIDList = K12.Presentation.NLDPanels.Teacher.SelectedSource;
-
-            _bgWorker.RunWorkerAsync();
-            
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void DownloadTemplate()
-        { 
-             if (_Config.Template == null)
-            {
-                FISCA.Presentation.Controls.MsgBox.Show("目前沒有任何範本");
-                return;
-            }
-
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Word (*.doc)|*.doc";
-            saveDialog.FileName = "晤談紀錄表樣板";
-            if (saveDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    _Config.Template.ToDocument().Save(saveDialog.FileName);
-                }
-                catch (Exception ex)
-                {
-                    FISCA.Presentation.Controls.MsgBox.Show("儲存失敗。" + ex.Message);
-                    return;
-                }
-
-                try
-                {
-                    System.Diagnostics.Process.Start(saveDialog.FileName);
-                }
-                catch (Exception ex)
-                {
-                    FISCA.Presentation.Controls.MsgBox.Show("開啟失敗。" + ex.Message);
-                    return;
-                }
-            }
-        }
-
-        private void UploadTemplate()
-        {
-            OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.Filter = "Word (*.doc)|*.doc";
-            if (openDialog.ShowDialog() == DialogResult.OK)
-            {
-                FileInfo fileInfo = new FileInfo(openDialog.FileName);
-                TemplateType type = TemplateType.Word;
-                ReportTemplate template = new ReportTemplate(fileInfo, type);
-                _Config.Template = template;
-                _Config.Save();
-            }        
-        }
-
-        /// <summary>
-        /// 設定預設樣版
-        /// </summary>
-        private void SetDefaultTemplate()
-        {
-            if (_Config.Template == null)
-            {
-                ReportTemplate rptTmp = new ReportTemplate(Properties.Resources.學生輔導晤談紀錄表_樣版, TemplateType.Word);
-                _Config.Template = rptTmp;
-                _Config.Save();
-            }
-        }
-
+        //檢視預設範本
         private void lnkDownload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            DownloadTemplate();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "另存新檔";
+            sfd.FileName = "學生晤談記錄表_範本.docx";
+            sfd.Filter = "Word檔案 (*.docx)|*.docx|所有檔案 (*.*)|*.*";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+
+                    FileStream fs = new FileStream(sfd.FileName, FileMode.Create);
+                    fs.Write(Properties.Resources.學生晤談記錄表_新範本, 0, Properties.Resources.學生晤談記錄表_新範本.Length);
+                    fs.Close();
+                    System.Diagnostics.Process.Start(sfd.FileName);
+                }
+                catch
+                {
+                    MsgBox.Show("指定路徑無法存取。", "另存檔案失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
         }
 
-        private void lnkUpload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        //檢視自定範本
+        private void linkViewGeDin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            UploadTemplate();
+            ConfigData cd = K12.Data.School.Configuration[_ReportName];
+            XmlElement config = cd.GetXml("XmlData", null);
+
+            if (config != null)
+            {
+                string templateBase64 = config.InnerText;
+                byte[] _buffer = Convert.FromBase64String(templateBase64);
+
+                if (_buffer != null)
+                {
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.Title = "另存新檔";
+                    sfd.FileName = "自訂學生晤談記錄表範本.docx";
+                    sfd.Filter = "Word檔案 (*.docx)|*.docx|所有檔案 (*.*)|*.*";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            Aspose.Words.Document doc = new Aspose.Words.Document(new MemoryStream(_buffer));
+                            doc.Save(sfd.FileName, Aspose.Words.SaveFormat.Docx);
+                        }
+                        catch (Exception ex)
+                        {
+                            MsgBox.Show("檔案無法儲存。" + ex.Message);
+                            return;
+                        }
+
+                        try
+                        {
+                            System.Diagnostics.Process.Start(sfd.FileName);
+                        }
+                        catch (Exception ex)
+                        {
+                            MsgBox.Show("檔案無法開啟。" + ex.Message);
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    MsgBox.Show("無自訂範本");
+                }
+            }
+            else
+            {
+                MsgBox.Show("無自訂範本\n請使用上傳功能上傳範本");
+            }
+        }
+
+        //上傳新範本
+        private void linkUpData_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "選擇自訂的學生晤談記錄表範本";
+            ofd.Filter = "Word檔案 (*.docx)|*.docx";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+
+                    byte[] tempBuffer = new byte[fs.Length];
+                    fs.Read(tempBuffer, 0, tempBuffer.Length);
+                    string base64 = Convert.ToBase64String(tempBuffer);
+                    fs.Close();
+
+                    ConfigData cd = K12.Data.School.Configuration[_ReportName];
+                    XmlElement XmlData = cd.GetXml("XmlData", null);
+
+                    if (XmlData != null)
+                    {
+                        XmlData.InnerText = base64;
+                    }
+                    else
+                    {
+                        XmlDocument xmldoc = new XmlDocument();
+                        xmldoc.LoadXml("<XmlData/>");
+                        XmlData = (XmlElement)xmldoc.SelectSingleNode("XmlData");
+                        XmlData.InnerText = base64;
+                    }
+                    cd.SetXml("XmlData", XmlData);
+                    cd.Save();
+
+                    rbDEF_2.Checked = true;
+
+                    MsgBox.Show("上傳成功。");
+                }
+                catch
+                {
+                    MsgBox.Show("指定路徑無法存取。", "開啟檔案失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
         }
     }
 }

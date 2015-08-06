@@ -11,6 +11,13 @@ namespace CounselTools
         public string StudentNumber { get; set; }
 
         public int GradeYear { get; set; }
+
+
+        /// <summary>
+        /// 顯示實際班級
+        /// </summary>
+        public int GradeYearDisplay { get; set; }
+
         public string ClassName { get; set; }
         public string SeatNo { get; set; }
         public string StudentName { get; set; }

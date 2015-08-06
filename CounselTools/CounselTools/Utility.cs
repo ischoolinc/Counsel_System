@@ -148,9 +148,23 @@ namespace CounselTools
                    cs.StudentNumber = dr["student_number"].ToString();
                    cs.StudentName = dr["sname"].ToString();
                    cs.GradeYear=0;
+                   cs.GradeYearDisplay = 0;
                    int gY;
                    if (int.TryParse(dr["grade_year"].ToString(), out gY))
+                   {
                        cs.GradeYear = gY;
+                       cs.GradeYearDisplay = gY;
+
+                       if (gY == 7 || gY == 10)
+                           cs.GradeYear = 1;
+
+                       if (gY == 8 || gY == 11)
+                           cs.GradeYear = 2;
+
+                       if (gY == 9 || gY == 12)
+                           cs.GradeYear = 3;
+                   }
+                       
                    retVal.Add(cs);
                }
            }

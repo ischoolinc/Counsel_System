@@ -177,7 +177,7 @@ namespace CounselTools
                     if (cs.NonInputCompleteDict.Count > 0)
                     {
                         wb.Worksheets[0].Cells[rowIdx, 0].PutValue(cs.StudentNumber);
-                        wb.Worksheets[0].Cells[rowIdx, 1].PutValue(cs.GradeYear);
+                        wb.Worksheets[0].Cells[rowIdx, 1].PutValue(cs.GradeYearDisplay);
                         wb.Worksheets[0].Cells[rowIdx,2].PutValue(cs.ClassName);
                         wb.Worksheets[0].Cells[rowIdx, 3].PutValue(cs.SeatNo);
                         wb.Worksheets[0].Cells[rowIdx, 4].PutValue(cs.StudentName);

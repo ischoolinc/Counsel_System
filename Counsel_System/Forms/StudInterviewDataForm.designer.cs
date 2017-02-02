@@ -821,13 +821,15 @@
             // 
             // groupPanel4
             // 
+            this.groupPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupPanel4.BackColor = System.Drawing.Color.Transparent;
             this.groupPanel4.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.groupPanel4.Controls.Add(this.txtContentDigest);
             this.groupPanel4.Location = new System.Drawing.Point(13, 435);
             this.groupPanel4.Name = "groupPanel4";
-            this.groupPanel4.Size = new System.Drawing.Size(600, 100);
+            this.groupPanel4.Size = new System.Drawing.Size(600, 155);
             // 
             // 
             // 
@@ -863,6 +865,9 @@
             // 
             // txtContentDigest
             // 
+            this.txtContentDigest.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -871,15 +876,16 @@
             this.txtContentDigest.Location = new System.Drawing.Point(17, 6);
             this.txtContentDigest.Multiline = true;
             this.txtContentDigest.Name = "txtContentDigest";
-            this.txtContentDigest.Size = new System.Drawing.Size(568, 60);
+            this.txtContentDigest.Size = new System.Drawing.Size(568, 119);
             this.txtContentDigest.TabIndex = 49;
             // 
             // btnSave
             // 
             this.btnSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSave.BackColor = System.Drawing.Color.Transparent;
             this.btnSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnSave.Location = new System.Drawing.Point(474, 543);
+            this.btnSave.Location = new System.Drawing.Point(471, 596);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(65, 23);
             this.btnSave.TabIndex = 53;
@@ -889,9 +895,10 @@
             // Exit
             // 
             this.Exit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Exit.BackColor = System.Drawing.Color.Transparent;
             this.Exit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Exit.Location = new System.Drawing.Point(548, 543);
+            this.Exit.Location = new System.Drawing.Point(545, 596);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(65, 23);
             this.Exit.TabIndex = 54;
@@ -1036,13 +1043,14 @@
             // 
             // labelX3
             // 
+            this.labelX3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelX3.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
             this.labelX3.BackgroundStyle.Class = "";
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(13, 543);
+            this.labelX3.Location = new System.Drawing.Point(10, 596);
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(47, 23);
             this.labelX3.TabIndex = 46;
@@ -1050,12 +1058,13 @@
             // 
             // txtAuthorID
             // 
+            this.txtAuthorID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             // 
             // 
             // 
             this.txtAuthorID.Border.Class = "TextBoxBorder";
             this.txtAuthorID.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtAuthorID.Location = new System.Drawing.Point(65, 543);
+            this.txtAuthorID.Location = new System.Drawing.Point(62, 596);
             this.txtAuthorID.Name = "txtAuthorID";
             this.txtAuthorID.Size = new System.Drawing.Size(186, 25);
             this.txtAuthorID.TabIndex = 50;
@@ -1069,7 +1078,7 @@
             // 
             this.labelX7.BackgroundStyle.Class = "";
             this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX7.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labelX7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.labelX7.ForeColor = System.Drawing.Color.Red;
             this.labelX7.Location = new System.Drawing.Point(67, 35);
             this.labelX7.Name = "labelX7";
@@ -1086,7 +1095,7 @@
             // 
             this.labelX14.BackgroundStyle.Class = "";
             this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX14.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labelX14.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.labelX14.ForeColor = System.Drawing.Color.Red;
             this.labelX14.Location = new System.Drawing.Point(258, 35);
             this.labelX14.Name = "labelX14";
@@ -1103,7 +1112,7 @@
             // 
             this.labelX15.BackgroundStyle.Class = "";
             this.labelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX15.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labelX15.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.labelX15.ForeColor = System.Drawing.Color.Red;
             this.labelX15.Location = new System.Drawing.Point(67, 103);
             this.labelX15.Name = "labelX15";
@@ -1120,7 +1129,7 @@
             // 
             this.labelX16.BackgroundStyle.Class = "";
             this.labelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX16.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labelX16.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.labelX16.ForeColor = System.Drawing.Color.Red;
             this.labelX16.Location = new System.Drawing.Point(428, 35);
             this.labelX16.Name = "labelX16";
@@ -1137,7 +1146,7 @@
             // 
             this.labelX17.BackgroundStyle.Class = "";
             this.labelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX17.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labelX17.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.labelX17.ForeColor = System.Drawing.Color.Red;
             this.labelX17.Location = new System.Drawing.Point(67, 67);
             this.labelX17.Name = "labelX17";
@@ -1276,25 +1285,27 @@
             // 
             // txtAuthorName
             // 
+            this.txtAuthorName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             // 
             // 
             // 
             this.txtAuthorName.Border.Class = "TextBoxBorder";
             this.txtAuthorName.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtAuthorName.Location = new System.Drawing.Point(340, 543);
+            this.txtAuthorName.Location = new System.Drawing.Point(337, 596);
             this.txtAuthorName.Name = "txtAuthorName";
             this.txtAuthorName.Size = new System.Drawing.Size(109, 25);
             this.txtAuthorName.TabIndex = 51;
             // 
             // labelX22
             // 
+            this.labelX22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelX22.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
             this.labelX22.BackgroundStyle.Class = "";
             this.labelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX22.Location = new System.Drawing.Point(265, 543);
+            this.labelX22.Location = new System.Drawing.Point(262, 596);
             this.labelX22.Name = "labelX22";
             this.labelX22.Size = new System.Drawing.Size(72, 23);
             this.labelX22.TabIndex = 58;
@@ -1304,7 +1315,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 575);
+            this.ClientSize = new System.Drawing.Size(623, 631);
             this.Controls.Add(this.txtAuthorName);
             this.Controls.Add(this.labelX22);
             this.Controls.Add(this.lblName);

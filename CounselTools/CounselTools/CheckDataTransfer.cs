@@ -37,7 +37,9 @@ namespace CounselTools
                     string key = GroupName + "_" + ss;
                     if (chkDict.ContainsKey(key))
                     {
-                        if (chkDict[key] == "")
+                        // 2017/5/18 穎驊 依照 [SH][02] 輔導的報表>綜合紀錄表未輸入完整名單，其中"家庭狀況"，一直顯示2/4或3/4，但檢查填寫狀況，皆有輸入。 項目修改
+                        // 正常有兄弟姊妹 其KEY，VALUE 可能為 (家庭狀況_兄弟姊妹_排行,1)， 但若為獨子 其KEY，VALUE 為 (家庭狀況_兄弟姊妹_排行,"")，要另外挑出來 不驗證。
+                        if (chkDict[key] == "" && key != "家庭狀況_兄弟姊妹_排行")
                             retError++;
                     }
                     else
@@ -260,84 +262,121 @@ namespace CounselTools
         public static int CheckRELATIVE_Error(string GroupName, List<string> Items, ClassStudent Student)
         {
             int retError = 0;
-            if (Gobal._relativeDict.ContainsKey(Student.StudentID))
-            {
-                Dictionary<string, DataRow> chkDict = new Dictionary<string, DataRow>();
-                foreach (DataRow dr in Gobal._relativeDict[Student.StudentID])
-                {
-                    string key = dr["title"].ToString();
-                    if (!chkDict.ContainsKey(key))
-                        chkDict.Add(key, dr);
-                }
 
-                foreach (string ss in Items)
-                {
-                    string key1 = GroupName + "_" + ss;
-                    if (chkDict.ContainsKey(key1))
-                    {
-                        if (chkDict[key1] == null)
-                            retError++;
-                        else
-                        { 
-                            // 檢查 name 是否輸入
-                            if (chkDict[key1]["name"] == null)
-                                retError++;
-                            else
-                                if (chkDict[key1]["name"].ToString() == "")
-                                    retError++;
-                        }
-                    }
-                    else
-                        retError++;
-                }
-
-            }
-            else
+            // 2017/5/18 穎驊 依照 [SH][02] 輔導的報表>綜合紀錄表未輸入完整名單，其中"家庭狀況"，一直顯示2/4或3/4，但檢查填寫狀況，皆有輸入。 項目修改
+            // 調整舊有問題邏輯(其總是會使錯誤數+1，下面已註解)，現在沒有填寫任何尊親屬資料，填答不完整數 +1
+            if (!Gobal._relativeDict.ContainsKey(Student.StudentID))
             {
-                retError = Items.Count;
+                retError++;
             }
+
+
+
+            //if (Gobal._relativeDict.ContainsKey(Student.StudentID))
+            //{
+            //    Dictionary<string, DataRow> chkDict = new Dictionary<string, DataRow>();
+            //    foreach (DataRow dr in Gobal._relativeDict[Student.StudentID])
+            //    {
+            //        string key = dr["title"].ToString();
+            //        if (!chkDict.ContainsKey(key))
+            //            chkDict.Add(key, dr);
+            //    }
+
+            //    foreach (string ss in Items)
+            //    {
+            //        string key1 = GroupName + "_" + ss;
+            //        if (chkDict.ContainsKey(key1))
+            //        {
+            //            if (chkDict[key1] == null)
+            //                retError++;
+            //            else
+            //            { 
+            //                // 檢查 name 是否輸入
+            //                if (chkDict[key1]["name"] == null)
+            //                    retError++;
+            //                else
+            //                    if (chkDict[key1]["name"].ToString() == "")
+            //                        retError++;
+            //            }
+            //        }
+            //        else
+            //            retError++;
+            //    }
+
+            //}
+            //else
+            //{
+            //    retError = Items.Count;
+            //}
+
+
             return retError;
         }
 
         public static int CheckSIBLING_Error(string GroupName, List<string> Items, ClassStudent Student)
         {
             int retError = 0;
-            if (Gobal._siblingDict.ContainsKey(Student.StudentID))
-            {
-                Dictionary<string, DataRow> chkDict = new Dictionary<string, DataRow>();
-                foreach (DataRow dr in Gobal._siblingDict[Student.StudentID])
-                {
-                    string key = dr["title"].ToString();
-                    if (!chkDict.ContainsKey(key))
-                        chkDict.Add(key, dr);
-                }
 
-                foreach (string ss in Items)
-                {
-                    string key1 = GroupName + "_" + ss;
-                    if (chkDict.ContainsKey(key1))
-                    {
-                        if (chkDict[key1] == null)
-                            retError++;
-                        else
-                        {
-                            // 檢查 name 是否輸入
-                            if (chkDict[key1]["name"] == null)
-                                retError++;
-                            else
-                                if (chkDict[key1]["name"].ToString() == "")
-                                    retError++;
-                        }
-                    }
-                    else
-                        retError++;
-                }
 
-            }
-            else
+            Dictionary<string, string> chkDict_single = new Dictionary<string, string>();
+
+            foreach (DataRow dr in Gobal._single_recordDict[Student.StudentID])
             {
-                retError = Items.Count;
+                string key = dr["key"].ToString();
+                if (!chkDict_single.ContainsKey(key))
+                    chkDict_single.Add(key, dr["data"].ToString().Trim());
             }
+
+
+            // 2017/5/18 穎驊 依照 [SH][02] 輔導的報表>綜合紀錄表未輸入完整名單，其中"家庭狀況"，一直顯示2/4或3/4，但檢查填寫狀況，皆有輸入。 項目修改
+            // 調整舊有問題邏輯(其總是會使錯誤數+1，下面已註解)，現在若是非獨子(chkDict_single["家庭狀況_兄弟姊妹_排行"]!="") 又沒有填寫任何兄弟姊妹資料，填答不完整數 +1
+            if (chkDict_single["家庭狀況_兄弟姊妹_排行"]!="")
+            {
+                if (! Gobal._siblingDict.ContainsKey(Student.StudentID))
+                {
+                    retError++;
+                }                                        
+            }
+
+
+            //if (Gobal._siblingDict.ContainsKey(Student.StudentID))
+            //{
+            //    Dictionary<string, DataRow> chkDict = new Dictionary<string, DataRow>();
+            //    foreach (DataRow dr in Gobal._siblingDict[Student.StudentID])
+            //    {
+            //        string key = dr["title"].ToString();
+            //        if (!chkDict.ContainsKey(key))
+            //            chkDict.Add(key, dr);
+            //    }
+
+            //    foreach (string ss in Items)
+            //    {
+            //        string key1 = GroupName + "_" + ss;
+            //        if (chkDict.ContainsKey(key1))
+            //        {
+            //            if (chkDict[key1] == null)
+            //                retError++;
+            //            else
+            //            {
+            //                // 檢查 name 是否輸入
+            //                if (chkDict[key1]["name"] == null)
+            //                    retError++;
+            //                else
+            //                    if (chkDict[key1]["name"].ToString() == "")
+            //                        retError++;
+            //            }
+            //        }
+            //        else
+            //            retError++;
+            //    }
+
+            //}
+            //else
+            //{
+            //    retError = Items.Count;
+            //}
+
+
             return retError;
         }
     }

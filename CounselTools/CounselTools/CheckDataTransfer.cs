@@ -320,24 +320,32 @@ namespace CounselTools
 
             Dictionary<string, string> chkDict_single = new Dictionary<string, string>();
 
-            foreach (DataRow dr in Gobal._single_recordDict[Student.StudentID])
+            // 2017 /5/22  穎驊 補上字典含Key 的檢查
+            if (Gobal._single_recordDict.ContainsKey(Student.StudentID))
             {
-                string key = dr["key"].ToString();
-                if (!chkDict_single.ContainsKey(key))
-                    chkDict_single.Add(key, dr["data"].ToString().Trim());
-            }
-
-
-            // 2017/5/18 穎驊 依照 [SH][02] 輔導的報表>綜合紀錄表未輸入完整名單，其中"家庭狀況"，一直顯示2/4或3/4，但檢查填寫狀況，皆有輸入。 項目修改
-            // 調整舊有問題邏輯(其總是會使錯誤數+1，下面已註解)，現在若是非獨子(chkDict_single["家庭狀況_兄弟姊妹_排行"]!="") 又沒有填寫任何兄弟姊妹資料，填答不完整數 +1
-            if (chkDict_single["家庭狀況_兄弟姊妹_排行"]!="")
-            {
-                if (! Gobal._siblingDict.ContainsKey(Student.StudentID))
+                foreach (DataRow dr in Gobal._single_recordDict[Student.StudentID])
                 {
-                    retError++;
-                }                                        
-            }
+                    string key = dr["key"].ToString();
+                    if (!chkDict_single.ContainsKey(key))
+                        chkDict_single.Add(key, dr["data"].ToString().Trim());
+                }
 
+
+                // 2017/5/18 穎驊 依照 [SH][02] 輔導的報表>綜合紀錄表未輸入完整名單，其中"家庭狀況"，一直顯示2/4或3/4，但檢查填寫狀況，皆有輸入。 項目修改
+                // 調整舊有問題邏輯(其總是會使錯誤數+1，下面已註解)，現在若是非獨子(chkDict_single["家庭狀況_兄弟姊妹_排行"]!="") 又沒有填寫任何兄弟姊妹資料，填答不完整數 +1
+                if (chkDict_single["家庭狀況_兄弟姊妹_排行"] != "")
+                {
+                    if (!Gobal._siblingDict.ContainsKey(Student.StudentID))
+                    {
+                        retError++;
+                    }
+                }
+            }
+            else 
+            {
+                retError++;
+            }
+            
 
             //if (Gobal._siblingDict.ContainsKey(Student.StudentID))
             //{

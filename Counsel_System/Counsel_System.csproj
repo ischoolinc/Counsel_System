@@ -42,6 +42,10 @@
       <HintPath>Library\Aspose.Cells.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Aspose.IO">
+      <HintPath>Library\Aspose.IO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Aspose.Words_201402, Version=14.1.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\Aspose.Words_201402.dll</HintPath>
@@ -301,9 +305,7 @@
     <Compile Include="DAO\AB_StudText.cs" />
     <Compile Include="DAO\AnswerPkey.cs" />
     <Compile Include="DAO\CareRecordItemManager.cs" />
-    <Compile Include="DAO\DataGridViewComboBoxExColumn.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="DAO\DataGridViewComboBoxExColumn.cs" />
     <Compile Include="DAO\DocTemplateTransfer.cs" />
     <Compile Include="DAO\DocumentMerge.cs" />
     <Compile Include="DAO\EnumControlType.cs" />

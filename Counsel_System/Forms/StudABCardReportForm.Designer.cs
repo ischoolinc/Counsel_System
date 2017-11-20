@@ -38,10 +38,13 @@
             this.chkUserDef = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.chkDefault = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.groupPanel2 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.chkFileSplitBySNum = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.chkFileAllInOne = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.ckBxSinglePrint = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.groupPanel3 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.ckBxPDF = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.ckBxDoc = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.groupPanel1.SuspendLayout();
             this.groupPanel2.SuspendLayout();
+            this.groupPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnPrint
@@ -50,7 +53,7 @@
             this.btnPrint.AutoSize = true;
             this.btnPrint.BackColor = System.Drawing.Color.Transparent;
             this.btnPrint.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnPrint.Location = new System.Drawing.Point(186, 122);
+            this.btnPrint.Location = new System.Drawing.Point(186, 353);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 25);
             this.btnPrint.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -64,7 +67,7 @@
             this.btnExit.AutoSize = true;
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnExit.Location = new System.Drawing.Point(267, 122);
+            this.btnExit.Location = new System.Drawing.Point(267, 353);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 25);
             this.btnExit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -200,11 +203,10 @@
             this.groupPanel2.BackColor = System.Drawing.Color.Transparent;
             this.groupPanel2.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel2.Controls.Add(this.chkFileSplitBySNum);
-            this.groupPanel2.Controls.Add(this.chkFileAllInOne);
-            this.groupPanel2.Location = new System.Drawing.Point(14, 260);
+            this.groupPanel2.Controls.Add(this.ckBxSinglePrint);
+            this.groupPanel2.Location = new System.Drawing.Point(14, 239);
             this.groupPanel2.Name = "groupPanel2";
-            this.groupPanel2.Size = new System.Drawing.Size(291, 66);
+            this.groupPanel2.Size = new System.Drawing.Size(327, 94);
             // 
             // 
             // 
@@ -236,45 +238,104 @@
             this.groupPanel2.StyleMouseOver.Class = "";
             this.groupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel2.TabIndex = 3;
-            this.groupPanel2.Text = "檔案產生方式";
+            this.groupPanel2.Text = "單檔列印";
             // 
-            // chkFileSplitBySNum
-            // 
-            this.chkFileSplitBySNum.AutoSize = true;
+            // ckBxSinglePrint
             // 
             // 
             // 
-            this.chkFileSplitBySNum.BackgroundStyle.Class = "";
-            this.chkFileSplitBySNum.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.chkFileSplitBySNum.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
-            this.chkFileSplitBySNum.Location = new System.Drawing.Point(140, 7);
-            this.chkFileSplitBySNum.Name = "chkFileSplitBySNum";
-            this.chkFileSplitBySNum.Size = new System.Drawing.Size(107, 21);
-            this.chkFileSplitBySNum.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.chkFileSplitBySNum.TabIndex = 1;
-            this.chkFileSplitBySNum.Text = "依學號分檔案";
             // 
-            // chkFileAllInOne
+            this.ckBxSinglePrint.BackgroundStyle.Class = "";
+            this.ckBxSinglePrint.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ckBxSinglePrint.Location = new System.Drawing.Point(12, 21);
+            this.ckBxSinglePrint.Name = "ckBxSinglePrint";
+            this.ckBxSinglePrint.Size = new System.Drawing.Size(316, 23);
+            this.ckBxSinglePrint.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ckBxSinglePrint.TabIndex = 0;
+            this.ckBxSinglePrint.Text = "使用單檔列印(檔名:學號_身分證_班級_座號_姓名)";
             // 
-            this.chkFileAllInOne.AutoSize = true;
+            // groupPanel3
+            // 
+            this.groupPanel3.BackColor = System.Drawing.Color.Transparent;
+            this.groupPanel3.CanvasColor = System.Drawing.SystemColors.Control;
+            this.groupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel3.Controls.Add(this.ckBxPDF);
+            this.groupPanel3.Controls.Add(this.ckBxDoc);
+            this.groupPanel3.Location = new System.Drawing.Point(14, 124);
+            this.groupPanel3.Name = "groupPanel3";
+            this.groupPanel3.Size = new System.Drawing.Size(327, 94);
             // 
             // 
             // 
-            this.chkFileAllInOne.BackgroundStyle.Class = "";
-            this.chkFileAllInOne.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.chkFileAllInOne.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
-            this.chkFileAllInOne.Location = new System.Drawing.Point(12, 7);
-            this.chkFileAllInOne.Name = "chkFileAllInOne";
-            this.chkFileAllInOne.Size = new System.Drawing.Size(107, 21);
-            this.chkFileAllInOne.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.chkFileAllInOne.TabIndex = 0;
-            this.chkFileAllInOne.Text = "產生單一檔案";
+            this.groupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.groupPanel3.Style.BackColorGradientAngle = 90;
+            this.groupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.groupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderBottomWidth = 1;
+            this.groupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.groupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderLeftWidth = 1;
+            this.groupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderRightWidth = 1;
+            this.groupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderTopWidth = 1;
+            this.groupPanel3.Style.Class = "";
+            this.groupPanel3.Style.CornerDiameter = 4;
+            this.groupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
+            this.groupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.groupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
+            // 
+            // 
+            // 
+            this.groupPanel3.StyleMouseDown.Class = "";
+            this.groupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.groupPanel3.StyleMouseOver.Class = "";
+            this.groupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.groupPanel3.TabIndex = 4;
+            this.groupPanel3.Text = "檔案格式選擇";
+            // 
+            // ckBxPDF
+            // 
+            // 
+            // 
+            // 
+            this.ckBxPDF.BackgroundStyle.Class = "";
+            this.ckBxPDF.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ckBxPDF.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
+            this.ckBxPDF.Location = new System.Drawing.Point(180, 19);
+            this.ckBxPDF.Name = "ckBxPDF";
+            this.ckBxPDF.Size = new System.Drawing.Size(100, 23);
+            this.ckBxPDF.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ckBxPDF.TabIndex = 1;
+            this.ckBxPDF.Text = "PDF(*.pdf)";
+            // 
+            // ckBxDoc
+            // 
+            // 
+            // 
+            // 
+            this.ckBxDoc.BackgroundStyle.Class = "";
+            this.ckBxDoc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ckBxDoc.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
+            this.ckBxDoc.Checked = true;
+            this.ckBxDoc.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckBxDoc.CheckValue = "Y";
+            this.ckBxDoc.Location = new System.Drawing.Point(12, 19);
+            this.ckBxDoc.Name = "ckBxDoc";
+            this.ckBxDoc.Size = new System.Drawing.Size(104, 23);
+            this.ckBxDoc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ckBxDoc.TabIndex = 0;
+            this.ckBxDoc.Text = "Word(*.doc)";
             // 
             // StudABCardReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(357, 156);
+            this.ClientSize = new System.Drawing.Size(357, 389);
+            this.Controls.Add(this.groupPanel3);
             this.Controls.Add(this.groupPanel2);
             this.Controls.Add(this.groupPanel1);
             this.Controls.Add(this.btnExit);
@@ -286,7 +347,7 @@
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
             this.groupPanel2.ResumeLayout(false);
-            this.groupPanel2.PerformLayout();
+            this.groupPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -302,9 +363,11 @@
         private System.Windows.Forms.LinkLabel lnkDefaultView;
         private System.Windows.Forms.LinkLabel lnkUserDefUpload;
         private System.Windows.Forms.LinkLabel lnkUserDef;
-        private DevComponents.DotNetBar.Controls.CheckBoxX chkFileSplitBySNum;
-        private DevComponents.DotNetBar.Controls.GroupPanel groupPanel2;
-        private DevComponents.DotNetBar.Controls.CheckBoxX chkFileAllInOne;
         private System.Windows.Forms.LinkLabel lnkChkMappingField;
+        private DevComponents.DotNetBar.Controls.GroupPanel groupPanel2;
+        private DevComponents.DotNetBar.Controls.GroupPanel groupPanel3;
+        private DevComponents.DotNetBar.Controls.CheckBoxX ckBxSinglePrint;
+        private DevComponents.DotNetBar.Controls.CheckBoxX ckBxPDF;
+        private DevComponents.DotNetBar.Controls.CheckBoxX ckBxDoc;
     }
 }

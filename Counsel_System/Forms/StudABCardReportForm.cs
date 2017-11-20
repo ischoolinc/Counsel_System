@@ -15,6 +15,8 @@ using System.Xml.Linq;
 using Aspose.Words.Drawing;
 using Aspose.Words.Reporting;
 using Aspose.Words.Tables;
+// 2017/11/20 羿均新增 PDF檔列印格式
+using Aspose.IO;
 
 namespace Counsel_System.Forms
 {
@@ -24,7 +26,7 @@ namespace Counsel_System.Forms
         private ReportConfiguration _Config;
         public enum SelectType { 學生, 班級 }
         public enum SelectTemplateType {預設,自訂 }
-        public enum SelectFileType {單檔,學號分檔 }
+        public enum SelectFileType {Word, PDF }
         // 有錯誤記錄
         string _ErrMsg1 = "";
         List<string> _ErrorList = new List<string>();
@@ -184,7 +186,16 @@ namespace Counsel_System.Forms
             string path = Path.Combine(System.Windows.Forms.Application.StartupPath, "Reports");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            path = Path.Combine(path, reportName + ".doc");
+
+            // 2017/11/20 羿均 新增PDF檔案列印格式 
+            if (ckBxDoc.Checked)
+            {
+                path = Path.Combine(path, reportName + ".doc");
+            }
+            if(ckBxPDF.Checked)
+            {
+                path = Path.Combine(path, reportName + ".pdf");
+            }
 
             if (File.Exists(path))
             {
@@ -202,27 +213,64 @@ namespace Counsel_System.Forms
 
             try
             {
-                document.Save(path, Aspose.Words.SaveFormat.Doc);
-                System.Diagnostics.Process.Start(path);
+                if (ckBxDoc.Checked) 
+                {
+                    document.Save(path, Aspose.Words.SaveFormat.Doc);
 
-               
+                    System.Diagnostics.Process.Start(path);
+                }
+                if (ckBxPDF.Checked)
+                {
+                    MemoryStream stream = new MemoryStream();
+                    document.Save(stream, Aspose.Words.SaveFormat.Doc);
+                    Aspose.IO.Tools.SavePDFtoLocal(stream, path);
+
+                    System.Diagnostics.Process.Start(path);
+                }
             }
             catch
             {
-                System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
-                sd.Title = "另存新檔";
-                sd.FileName = reportName + ".doc";
-                sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
-                if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (ckBxDoc.Checked)
                 {
-                    try
+                    System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
+                    sd.Title = "另存新檔";
+                    sd.FileName = reportName + ".doc";
+                    sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
+                    if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        document.Save(sd.FileName, Aspose.Words.SaveFormat.Doc);
+                        try
+                        {
+                            document.Save(sd.FileName, Aspose.Words.SaveFormat.Doc);
+                            System.Diagnostics.Process.Start(sd.FileName);
+                        }
+                        catch
+                        {
+                            FISCA.Presentation.Controls.MsgBox.Show("指定路徑無法存取。", "建立檔案失敗", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            return;
+                        }
                     }
-                    catch
+                }
+                if (ckBxPDF.Checked)
+                {
+                    System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
+                    sd.Title = "另存新檔";
+                    sd.FileName = reportName + ".pdf";
+                    sd.Filter = "Pdf Files|*.pdf";
+                    if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        FISCA.Presentation.Controls.MsgBox.Show("指定路徑無法存取。", "建立檔案失敗", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                        return;
+                        try
+                        {
+                            MemoryStream stream = new MemoryStream();
+                            document.Save(stream, Aspose.Words.SaveFormat.Doc);
+                            Aspose.IO.Tools.SavePDFtoLocal(stream, sd.FileName);
+
+                            System.Diagnostics.Process.Start(sd.FileName);
+                        }
+                        catch
+                        {
+                            FISCA.Presentation.Controls.MsgBox.Show("指定路徑無法存取。", "建立檔案失敗", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            return;
+                        }
                     }
                 }
             }
@@ -1432,17 +1480,17 @@ namespace Counsel_System.Forms
 
             // 讀取設定
             string strTemp = _Config.GetString("SelectTemplateType", "預設");
-            string strFile = _Config.GetString("SelectFileType", "單檔");
+            string strFile = _Config.GetString("SelectFileType", "Word");
 
             if (strTemp == "預設")
                 chkDefault.Checked=true;
             else
                 chkUserDef.Checked = true;
-
-            if (strFile == "單檔")
-                chkFileAllInOne.Checked = true;
+            // 2017/11/20 羿均 新增 word 和 pdf 設定
+            if (strFile == "Word")
+                ckBxDoc.Checked = true;
             else
-                chkFileSplitBySNum.Checked = true;
+                ckBxPDF.Checked = true;
 
         }
 
@@ -1456,11 +1504,11 @@ namespace Counsel_System.Forms
             if (chkUserDef.Checked)
                 _SelectTemplateType = SelectTemplateType.自訂;
 
-            if (chkFileAllInOne.Checked)
-                _SelectFileType = SelectFileType.單檔;
+            if (ckBxDoc.Checked)
+                _SelectFileType = SelectFileType.Word;
 
-            if (chkFileSplitBySNum.Checked)
-                _SelectFileType = SelectFileType.學號分檔;
+            if (ckBxPDF.Checked)
+                _SelectFileType = SelectFileType.PDF;
 
             _Config.SetString("SelectTemplateType", _SelectTemplateType.ToString());
             _Config.SetString("SelectFileType", _SelectFileType.ToString());

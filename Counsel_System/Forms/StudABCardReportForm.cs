@@ -219,12 +219,14 @@ namespace Counsel_System.Forms
             {
                 if (!ckBxSinglePrint.Checked)
                 {
+                    // Word
                     if (ckBxDoc.Checked)
                     {
                         document.Save(path, Aspose.Words.SaveFormat.Doc);
 
                         System.Diagnostics.Process.Start(path);
                     }
+                    // PDF
                     if (ckBxPDF.Checked)
                     {
                         MemoryStream stream = new MemoryStream();
@@ -234,11 +236,13 @@ namespace Counsel_System.Forms
                         System.Diagnostics.Process.Start(path);
                     }
                 }
+                // 單檔列印
                 if (ckBxSinglePrint.Checked)
                 {
-
+                    // Word 
                     if (ckBxDoc.Checked)
                     {
+                        // 單檔的存檔路徑另外處理
                         string path2 = "";
                         foreach (var doc in docDic)
                         {
@@ -246,10 +250,13 @@ namespace Counsel_System.Forms
                             path2 = Path.Combine(path2, doc.Key + ".doc");
                             doc.Value.Save(path2 + ".doc", Aspose.Words.SaveFormat.Doc);
                         }
+                        // 開啟檔案儲存的資料夾
                         System.Diagnostics.Process.Start(Path.Combine(System.Windows.Forms.Application.StartupPath, "Reports"));
                     }
+                    // PDF
                     if (ckBxPDF.Checked)
                     {
+                        // 單檔的存檔路徑另外處理
                         string path2 = "";
                         MemoryStream stream = new MemoryStream();
                         foreach (var doc in docDic)
@@ -259,12 +266,16 @@ namespace Counsel_System.Forms
                             doc.Value.Save(stream, Aspose.Words.SaveFormat.Doc);
                             Aspose.IO.Tools.SavePDFtoLocal(stream, path2);
                         }
+                        // 開啟檔案儲存的資料夾
+
                         System.Diagnostics.Process.Start(Path.Combine(System.Windows.Forms.Application.StartupPath, "Reports"));
                     }
                 }
             }
+            // 處理檔名重複時
             catch
             {
+                // word
                 if (ckBxDoc.Checked)
                 {
                     System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
@@ -285,6 +296,7 @@ namespace Counsel_System.Forms
                         }
                     }
                 }
+                // PDF
                 if (ckBxPDF.Checked)
                 {
                     System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
@@ -1426,7 +1438,8 @@ namespace Counsel_System.Forms
                 }
 
                 _dtTable.Rows.Add(row);
-                //table = _dtTable.Clone();
+
+                // 避免table的資料被覆寫，所以這邊用copy
                 table = _dtTable.Copy();
                 // 讀取 單檔列印 檔名、內容
                 dtTableDic.Add(fileName, table);
@@ -1438,13 +1451,15 @@ namespace Counsel_System.Forms
             doc.MailMerge.FieldMergingCallback = new InsertDocumentAtMailMergeHandler();
             doc.Sections.Add(doc.ImportNode(document.Sections[0], true));
             //doc.MailMerge.MergeField += new Aspose.Words.Reporting.MergeFieldEventHandler(MailMerge_MergeField);
+            
+            // 判斷單檔列印機制
             if (!ckBxSinglePrint.Checked)
             {
                 doc.MailMerge.Execute(_dtTable);
             }
             if (ckBxSinglePrint.Checked)
             {
-                
+                // 將單檔列印的DataTable轉成Document
                 docDic.Clear();
                 foreach (var dt in dtTableDic)
                 {

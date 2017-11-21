@@ -33,6 +33,10 @@ namespace Counsel_System.Forms
         // 樣板內合併欄位名稱
         Dictionary<string, byte> _TemplateFieldDict = new Dictionary<string, byte>();
 
+        //2017/11/20 羿均
+        Dictionary<string, DataTable> dtTableDic = new Dictionary<string, DataTable>();
+        Dictionary<string, Document> docDic = new Dictionary<string, Document>();
+        List<string> fileNameList = new List<string>();
 
         // 最大資料筆數,data table columns 使用
         int _MaxDataCols = 30;
@@ -213,19 +217,50 @@ namespace Counsel_System.Forms
 
             try
             {
-                if (ckBxDoc.Checked) 
+                if (!ckBxSinglePrint.Checked)
                 {
-                    document.Save(path, Aspose.Words.SaveFormat.Doc);
+                    if (ckBxDoc.Checked)
+                    {
+                        document.Save(path, Aspose.Words.SaveFormat.Doc);
 
-                    System.Diagnostics.Process.Start(path);
+                        System.Diagnostics.Process.Start(path);
+                    }
+                    if (ckBxPDF.Checked)
+                    {
+                        MemoryStream stream = new MemoryStream();
+                        document.Save(stream, Aspose.Words.SaveFormat.Doc);
+                        Aspose.IO.Tools.SavePDFtoLocal(stream, path);
+
+                        System.Diagnostics.Process.Start(path);
+                    }
                 }
-                if (ckBxPDF.Checked)
+                if (ckBxSinglePrint.Checked)
                 {
-                    MemoryStream stream = new MemoryStream();
-                    document.Save(stream, Aspose.Words.SaveFormat.Doc);
-                    Aspose.IO.Tools.SavePDFtoLocal(stream, path);
 
-                    System.Diagnostics.Process.Start(path);
+                    if (ckBxDoc.Checked)
+                    {
+                        string path2 = "";
+                        foreach (var doc in docDic)
+                        {
+                            path2 = Path.Combine(System.Windows.Forms.Application.StartupPath, "Reports");
+                            path2 = Path.Combine(path2, doc.Key + ".doc");
+                            doc.Value.Save(path2 + ".doc", Aspose.Words.SaveFormat.Doc);
+                        }
+                        System.Diagnostics.Process.Start(Path.Combine(System.Windows.Forms.Application.StartupPath, "Reports"));
+                    }
+                    if (ckBxPDF.Checked)
+                    {
+                        string path2 = "";
+                        MemoryStream stream = new MemoryStream();
+                        foreach (var doc in docDic)
+                        {
+                            path2 = Path.Combine(System.Windows.Forms.Application.StartupPath, "Reports");
+                            path2 = Path.Combine(path2, doc.Key + ".pdf");
+                            doc.Value.Save(stream, Aspose.Words.SaveFormat.Doc);
+                            Aspose.IO.Tools.SavePDFtoLocal(stream, path2);
+                        }
+                        System.Diagnostics.Process.Start(Path.Combine(System.Windows.Forms.Application.StartupPath, "Reports"));
+                    }
                 }
             }
             catch
@@ -554,11 +589,22 @@ namespace Counsel_System.Forms
 
             // 開始填入資料
             int idx = 1;
+            dtTableDic.Clear();
             foreach (string StudID in _StudentIDList)
             {
                 _ErrMsg1 = "";
+                DataTable table = new DataTable();
+                // 如果勾選單檔列印的話，在每次填入資料時 先清空table
+                if (ckBxSinglePrint.Checked)
+                {
+                    _dtTable.Clear();
+                }
+
                 DataRow row = _dtTable.NewRow();
-                                
+                
+                   
+                string fileName = "";
+
                 row["學校名稱"] = SchoolName;
                                 
                 row["姓名"] = "";
@@ -582,6 +628,13 @@ namespace Counsel_System.Forms
                         row["生日2"] = (_StudRecDict[StudID].Birthday.Value.Year - 1911) + "/" + _StudRecDict[StudID].Birthday.Value.Month + "/" + _StudRecDict[StudID].Birthday.Value.Day;
                     }
                     row["出生地"] = _StudRecDict[StudID].BirthPlace;
+
+                    // 2017/11/20 羿均 單檔列印檔名
+                    fileName += _StudRecDict[StudID].StudentNumber;
+                    fileName += "_" + _StudRecDict[StudID].IDNumber;
+                    fileName += "_" + _StudRecDict[StudID].Class.Name;
+                    fileName += "_" + _StudRecDict[StudID].SeatNo;
+                    fileName += "_" + _StudRecDict[StudID].Name;
                 }
 
                 row["入學照片"] = "";
@@ -1372,19 +1425,48 @@ namespace Counsel_System.Forms
                     }
                 }
 
+                _dtTable.Rows.Add(row);
+                //table = _dtTable.Clone();
+                table = _dtTable.Copy();
+                // 讀取 單檔列印 檔名、內容
+                dtTableDic.Add(fileName, table);
 
-                _dtTable.Rows.Add(row);               
             }
+
             Document document = new Document();
             document = docTemplae;
             doc.MailMerge.FieldMergingCallback = new InsertDocumentAtMailMergeHandler();
             doc.Sections.Add(doc.ImportNode(document.Sections[0], true));
-            
             //doc.MailMerge.MergeField += new Aspose.Words.Reporting.MergeFieldEventHandler(MailMerge_MergeField);
-            
-            doc.MailMerge.Execute(_dtTable);
+            if (!ckBxSinglePrint.Checked)
+            {
+                doc.MailMerge.Execute(_dtTable);
+            }
+            if (ckBxSinglePrint.Checked)
+            {
+                
+                docDic.Clear();
+                foreach (var dt in dtTableDic)
+                {
+                    Document _doc = new Document();
+                    Document docut = new Document();
+                    docut = docTemplae;
+
+                    _doc.Sections.Clear();
+                    _doc.MailMerge.FieldMergingCallback = new InsertDocumentAtMailMergeHandler();
+                    _doc.Sections.Add(_doc.ImportNode(docut.Sections[0], true));
+
+                    _doc.MailMerge.Execute(dt.Value);
+
+                    _doc.MailMerge.RemoveEmptyParagraphs = true;
+                    _doc.MailMerge.DeleteFields();
+                    
+                    docDic.Add(dt.Key, _doc);
+                }
+            }
+
             doc.MailMerge.RemoveEmptyParagraphs = true;
-            doc.MailMerge.DeleteFields();            
+            doc.MailMerge.DeleteFields();
             _bgWorker.ReportProgress(95);
             e.Result = doc;
         }

@@ -1786,7 +1786,8 @@ namespace Counsel_System.Forms
             }
 
             // 輔導相關測驗、晤談、個案、優先
-            for (int i = 1; i <= 100; i++)
+            // 2018.09.21 [ischoolKingdom] Vicky依據 [09-25][02] 輔導-"綜合資料紀錄表"晤談紀錄變數 欄位數增加 項目，晤談紀錄上限提供到200筆，以及補齊相關功能變數。
+            for (int i = 1; i <= 200; i++)
             {
                 _dtTable.Columns.Add("測驗名稱" + i);
                 _dtTable.Columns.Add("測驗日期" + i);

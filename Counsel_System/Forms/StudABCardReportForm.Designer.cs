@@ -55,7 +55,7 @@
             this.btnPrint.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnPrint.Location = new System.Drawing.Point(186, 353);
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(75, 25);
+            this.btnPrint.Size = new System.Drawing.Size(75, 30);
             this.btnPrint.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.btnPrint.TabIndex = 0;
             this.btnPrint.Text = "列印";
@@ -69,7 +69,7 @@
             this.btnExit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnExit.Location = new System.Drawing.Point(267, 353);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(75, 25);
+            this.btnExit.Size = new System.Drawing.Size(75, 30);
             this.btnExit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "離開";
@@ -127,7 +127,7 @@
             this.lnkChkMappingField.AutoSize = true;
             this.lnkChkMappingField.Location = new System.Drawing.Point(223, 10);
             this.lnkChkMappingField.Name = "lnkChkMappingField";
-            this.lnkChkMappingField.Size = new System.Drawing.Size(86, 17);
+            this.lnkChkMappingField.Size = new System.Drawing.Size(112, 22);
             this.lnkChkMappingField.TabIndex = 7;
             this.lnkChkMappingField.TabStop = true;
             this.lnkChkMappingField.Text = "檢視合併欄位";
@@ -138,7 +138,7 @@
             this.lnkUserDefUpload.AutoSize = true;
             this.lnkUserDefUpload.Location = new System.Drawing.Point(223, 37);
             this.lnkUserDefUpload.Name = "lnkUserDefUpload";
-            this.lnkUserDefUpload.Size = new System.Drawing.Size(34, 17);
+            this.lnkUserDefUpload.Size = new System.Drawing.Size(44, 22);
             this.lnkUserDefUpload.TabIndex = 6;
             this.lnkUserDefUpload.TabStop = true;
             this.lnkUserDefUpload.Text = "上傳";
@@ -149,7 +149,7 @@
             this.lnkUserDef.AutoSize = true;
             this.lnkUserDef.Location = new System.Drawing.Point(177, 37);
             this.lnkUserDef.Name = "lnkUserDef";
-            this.lnkUserDef.Size = new System.Drawing.Size(34, 17);
+            this.lnkUserDef.Size = new System.Drawing.Size(44, 22);
             this.lnkUserDef.TabIndex = 5;
             this.lnkUserDef.TabStop = true;
             this.lnkUserDef.Text = "檢視";
@@ -160,7 +160,7 @@
             this.lnkDefaultView.AutoSize = true;
             this.lnkDefaultView.Location = new System.Drawing.Point(177, 10);
             this.lnkDefaultView.Name = "lnkDefaultView";
-            this.lnkDefaultView.Size = new System.Drawing.Size(34, 17);
+            this.lnkDefaultView.Size = new System.Drawing.Size(44, 22);
             this.lnkDefaultView.TabIndex = 4;
             this.lnkDefaultView.TabStop = true;
             this.lnkDefaultView.Text = "檢視";
@@ -177,7 +177,7 @@
             this.chkUserDef.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
             this.chkUserDef.Location = new System.Drawing.Point(12, 36);
             this.chkUserDef.Name = "chkUserDef";
-            this.chkUserDef.Size = new System.Drawing.Size(147, 21);
+            this.chkUserDef.Size = new System.Drawing.Size(179, 26);
             this.chkUserDef.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.chkUserDef.TabIndex = 1;
             this.chkUserDef.Text = "自訂輔導資料紀錄表";
@@ -193,7 +193,7 @@
             this.chkDefault.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
             this.chkDefault.Location = new System.Drawing.Point(12, 7);
             this.chkDefault.Name = "chkDefault";
-            this.chkDefault.Size = new System.Drawing.Size(147, 21);
+            this.chkDefault.Size = new System.Drawing.Size(179, 26);
             this.chkDefault.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.chkDefault.TabIndex = 0;
             this.chkDefault.Text = "預設輔導資料紀錄表";
@@ -332,7 +332,7 @@
             // 
             // StudABCardReportForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 389);
             this.Controls.Add(this.groupPanel3);
@@ -341,6 +341,8 @@
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnPrint);
             this.DoubleBuffered = true;
+            this.MaximumSize = new System.Drawing.Size(375, 436);
+            this.MinimumSize = new System.Drawing.Size(375, 436);
             this.Name = "StudABCardReportForm";
             this.Text = "學生綜合資料紀錄表";
             this.Load += new System.EventHandler(this.StudABCardReportForm_Load);

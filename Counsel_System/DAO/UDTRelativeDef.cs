@@ -77,5 +77,11 @@ namespace Counsel_System.DAO
         /// </summary>
         [Field(Field = "national", Indexed = false)]
         public string National { get; set; }
+
+        /// <summary>
+        /// 行動電話
+        /// </summary>
+        [Field(Field = "cell_phone", Indexed = false)]
+        public string CellPhone { get; set; }
     }
 }

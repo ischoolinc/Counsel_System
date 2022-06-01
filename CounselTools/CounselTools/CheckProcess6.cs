@@ -49,7 +49,11 @@ namespace CounselTools
             items.Add("內容3");
             items.Add("填寫日期");
 
-            for(int g=1;g<=_Student.GradeYear;g++)
+            // 2022-06-01 高雄小組會議要求只驗證1、2年級，三年級不驗證，因三年級不需要填寫
+            int checkGradeYear = 1;
+            if (_Student.GradeYear >= 3)
+                checkGradeYear = 2;
+            for (int g=1;g<= checkGradeYear; g++)
             {
                 foreach(string str in items)
                     chkItems1.Add(str+"_"+g);
